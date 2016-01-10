@@ -3,7 +3,15 @@
 	require(dirname(__FILE__).'/../lib/auth.class.php');
 
 	$auth = new auth();
-	var_dump($auth->register('test1234', 'bl111u', 'bl111u', 'info@nicolabortignon.com'));
+	
+	$username = $_POST["email"];
+	$email = $username;
+	$password = $_POST["password"];
+	$reEntryPassword = $password;
+	$currency = $_POST["currency"];
+	echo 'ciao';
+	echo $username;
+	var_dump($auth->register($username, $password, $reEntryPassword, $email, $currency));
 
 
 

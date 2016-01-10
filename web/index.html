@@ -6,10 +6,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
-     
-  
-
-  
   <title>EasyBuy</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,7 +74,8 @@
 <!-- Modal Login -->
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <form id="registerForm">
+      <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -86,17 +83,16 @@
         <h4 class="modal-title" id="myModalLabel">Register</h4>
       </div>
       <div class="modal-body">
-        <form>
           <div class="form-group row">
             <label for="inputEmail3" class="col-sm-3 form-control-label">Email</label>
             <div class="col-sm-9">
-              <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+              <input type="email" class="form-control" id="InputEmail" placeholder="Email">
             </div>
           </div>
           <div class="form-group row">
             <label for="inputPassword3" class="col-sm-3 form-control-label">Password</label>
             <div class="col-sm-9">
-              <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+              <input type="password" class="form-control" id="InputPassword" placeholder="Password">
             </div>
           </div>
           <div class="form-group row">
@@ -104,19 +100,19 @@
             <div class="col-sm-9">
               <div class="radio">
                 <label>
-                  <input type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                  <input type="radio" name="currencyRadio" id="gridRadios1" value="1" checked>
                   Euro (&euro;)
                 </label>
               </div>
               <div class="radio">
                 <label>
-                  <input type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                  <input type="radio" name="currencyRadio" id="gridRadios2" value="2">
                   GBP (&pound;)
                 </label>
               </div>
               <div class="radio disabled">
                 <label>
-                  <input type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                  <input type="radio" name="currencyRadio" id="gridRadios3" value="3">
                   USD (&dollar;)
                 </label>
               </div>
@@ -132,19 +128,18 @@
               </div>
             </div>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm  btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-sm  btn-primary">Register</button>
+        <button type="submit" class="btn btn-sm  btn-primary">Register</button>
       </div>
-    </div>
+      </div>
+    </form>
   </div>
 </div>
 
 <div class="container">
     <div class="row">
-
         <div class="col-md-2">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum voluptatem quo quibusdam eos quod maiores, quae ea. Enim accusantium, rem asperiores perspiciatis, nemo saepe sequi, dolorum eaque officia ipsam cupiditate.
         </div>
@@ -174,5 +169,36 @@
         </div>
     </div>
 </div>
+<script>
+$( "#registerForm" ).submit(function( event ) {
+
+  event.preventDefault();
+  console.log('register form pressed');
+  var currency = $("form input[name='currencyRadio']:checked").val();
+  var username = $('#InputEmail').val()
+  var password = $('#InputPassword').val()
+  $.post( "php/api/register.php", { 
+    email: username, 
+    password: password,
+    currency: currency
+  })
+  .done(function( data ) {
+    console.log('called registration' + data);
+    // should check here if everything went ok.
+    login(username,password);
+  });
+});
+
+var login = function(username, password){
+  console.log('Calling login');
+  $.post( "php/api/login.php", { 
+    username: username, 
+    password: password,
+  })
+  .done(function( data ) {
+    alert( "Data Loaded: " + data );
+  });
+}
+</script>
 </body>
 </html>

@@ -10,6 +10,7 @@ class auth
 	public $errormsg;
 	public $successmsg;
 
+	public $auth_conf;
 	public $site_name;
 	public $email_from;
 	public $max_attempts;
@@ -26,15 +27,15 @@ class auth
 		$this->lang = $GLOBALS['lang'];
 		$this->loc = $GLOBALS['loc'];
 
-		$auth_conf = $GLOBALS['auth_conf'];
-		$this->site_name = $auth_conf['site_name'];
-		$this->email_from = $auth_conf['email_from'];
-		$this->max_attempts = $auth_conf['max_attempts'];
-		$this->base_url = $auth_conf['base_url'];
-		$this->session_duration = $auth_conf['session_duration'];
-		$this->security_duration = $auth_conf['security_duration'];
-		$this->salt_1 = $auth_conf['salt_1'];
-		$this->salt_2 = $auth_conf['salt_2'];
+		$this->auth_conf = $GLOBALS['auth_conf'];
+		$this->site_name = $this->auth_conf['site_name'];
+		$this->email_from = $this->auth_conf['email_from'];
+		$this->max_attempts = $this->auth_conf['max_attempts'];
+		$this->base_url = $this->auth_conf['base_url'];
+		$this->session_duration = $this->auth_conf['session_duration'];
+		$this->security_duration = $this->auth_conf['security_duration'];
+		$this->salt_1 = $this->auth_conf['salt_1'];
+		$this->salt_2 = $this->auth_conf['salt_2'];
 	}
 	
 	/*
@@ -46,14 +47,12 @@ class auth
 	
 	function login($username, $password)
 	{
-		include("config.php");
-		include("lang.php");
 		
 		if(!isset($_COOKIE["auth_session"]))
 		{
 			$attcount = $this->getattempt($_SERVER['REMOTE_ADDR']);
 			
-			if($attcount >= $auth_conf['max_attempts'])
+			if($attcount >= $this->auth_conf['max_attempts'])
 			{
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_lockedout'];
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_wait30'];
@@ -151,7 +150,7 @@ class auth
 	* @return boolean
 	*/
 	
-	function register($username, $password, $verifypassword, $email)
+	function register($username, $password, $verifypassword, $email, $currency)
 	{
 	
 		if(!isset($_COOKIE["auth_session"]))
@@ -221,8 +220,8 @@ class auth
 						$password = $this->hashpass($password);
 						$activekey = $this->randomkey(15);	 
 					
-						$query = $this->mysqli->prepare("INSERT INTO users (username, password, email, activekey) VALUES (?, ?, ?, ?)");
-						$query->bind_param("ssss", $username, $password, $email, $activekey);
+						$query = $this->mysqli->prepare("INSERT INTO users (username, password, email, activekey, currency) VALUES (?, ?, ?, ?, ?)");
+						$query->bind_param("sssss", $username, $password, $email, $activekey, $currency);
 						$query->execute();
 						$query->close();
 						
@@ -288,7 +287,7 @@ class auth
 		$query->close();
 		
 		$ip = $_SERVER['REMOTE_ADDR'];
-		$expiredate = date("Y-m-d H:i:s", strtotime($auth_conf['session_duration']));
+		$expiredate = date("Y-m-d H:i:s", strtotime($this->auth_conf['session_duration']));
 		$expiretime = strtotime($expiredate);
 		
 		$query = $this->mysqli->prepare("INSERT INTO sessions (uid, username, hash, expiredate, ip) VALUES (?, ?, ?, ?, ?)");
