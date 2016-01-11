@@ -57,18 +57,18 @@ class auth
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_lockedout'];
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_wait30'];
 				
-				return false;
+				return $this->errormsg;
 			}
 			else 
 			{
 				// Input verification :
 			
-				if(strlen($username) == 0) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_empty']; return false; }
-				elseif(strlen($username) > 30) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_long']; return false; }
-				elseif(strlen($username) < 3) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_short']; return false; }
-				elseif(strlen($password) == 0) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_password_empty']; return false; }
-				elseif(strlen($password) > 30) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_password_short']; return false; }
-				elseif(strlen($password) < 5) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_password_long']; return false; }
+				if(strlen($username) == 0) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_empty']; return $this->errormsg; }
+				elseif(strlen($username) > 30) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_long']; return $this->errormsg; }
+				elseif(strlen($username) < 3) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_short']; return $this->errormsg; }
+				elseif(strlen($password) == 0) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_password_empty']; return $this->errormsg; }
+				elseif(strlen($password) > 30) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_password_short']; return $this->errormsg; }
+				elseif(strlen($password) < 5) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_password_long']; return $this->errormsg; }
 				else 
 				{
 					// Input is valid
@@ -99,7 +99,7 @@ class auth
 						
 						$this->errormsg[] = sprintf($this->lang[$this->loc]['auth']['login_attempts_remaining'], $remaincount);
 						
-						return false;
+						return $this->errormsg;
 					}
 					else 
 					{
@@ -113,7 +113,7 @@ class auth
 							
 							$this->errormsg[] = $this->lang[$this->loc]['auth']['login_account_inactive'];
 							
-							return false;
+							return $this->errormsg;
 						}
 						else
 						{
@@ -125,7 +125,7 @@ class auth
 					
 							$this->successmsg[] = $this->lang[$this->loc]['auth']['login_success'];
 							
-							return true;
+							return $this->successmsg;
 						}
 					}
 				}
@@ -137,7 +137,7 @@ class auth
 			
 			$this->errormsg[] = $this->lang[$this->loc]['auth']['login_already'];
 			
-			return false;
+			return $this->errormsg;
 		}
 	}
 	
@@ -256,7 +256,7 @@ class auth
 		
 			$this->errormsg[] = $this->lang[$this->loc]['auth']['register_email_loggedin'];
 			
-			return false;
+			return $this->errormsg;
 		}
 	}
 	
