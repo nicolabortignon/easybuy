@@ -170,43 +170,48 @@
     </div>
 </div>
 <script>
-$( "#registerForm" ).submit(function( event ) {
-  event.preventDefault();
-  var currency = $("form input[name='currencyRadio']:checked").val();
-  var username = $('#InputEmail').val()
-  var password = $('#InputPassword').val()
-  $.post( "php/api/register.php", { 
-    email: username, 
-    password: password,
-    currency: currency
-  })
-  .done(function( data ) {
-    alert(data);
-    console.log('called registration' + data);
-    // should check here if everything went ok.
+$( document ).ready(function() {
+  $( "#registerForm" ).submit(function( event ) {
+    event.preventDefault();
+    var currency = $("form input[name='currencyRadio']:checked").val();
+    var username = $('#InputEmail').val()
+    var password = $('#InputPassword').val()
+    $.post( "php/api/register.php", { 
+      email: username, 
+      password: password,
+      currency: currency
+    })
+    .done(function( data ) {
+      alert(data);
+      console.log('called registration' + data);
+      // should check here if everything went ok.
+      login(username,password);
+    });
+  });
+
+  $( "#loginForm" ).submit(function( event ) {
+    console.log('calling login form submit');
+    event.preventDefault();
+    var username = $('#LoginEmail').val()
+    var password = $('#LoginPassword').val()
     login(username,password);
   });
+
+
+  var login = function(username, password){
+    console.log('Calling login');
+    $.post( "php/api/login.php", { 
+      username: username, 
+      password: password,
+    })
+    .done(function( data ) {
+      console.log('login data');
+      console.log(data);
+      console.log('----');
+      window.location.href = "user_profile.html";
+    });
+  }
 });
-
-$( "#loginForm" ).submit(function( event ) {
-  console.log('calling login form submit');
-  event.preventDefault();
-  var username = $('#LoginEmail').val()
-  var password = $('#LoginPassword').val()
-  login(username,password);
-});
-
-
-var login = function(username, password){
-  console.log('Calling login');
-  $.post( "php/api/login.php", { 
-    username: username, 
-    password: password,
-  })
-  .done(function( data ) {
-    alert( "Data Loaded: " + data );
-  });
-}
 </script>
 </body>
 </html>

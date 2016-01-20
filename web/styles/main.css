@@ -98,6 +98,23 @@ input {
     background-position: bottom; 
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de3e9b', endColorstr='#404c9c', GradientType=0 );
 }
+.bodyMarginTop{
+	padding-top: 100px;
+}
+.menuColor{
+	height: 120px;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#de3e9b+0,7db9e8+100&1+0,0.01+100 */
+	background: -moz-linear-gradient(top,  rgba(222,62,155,1) 0%, rgba(125,185,232,0.01) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(222,62,155,1) 0%,rgba(125,185,232,0.01) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(222,62,155,1) 0%,rgba(125,185,232,0.01) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de3e9b', endColorstr='#037db9e8',GradientType=0 ); /* IE6-9 */
+	position: fixed;
+	width: 100%;
+	top: 0px;
+	z-index: 2;
+}
+.navbar-fixed-top{
+}
 
 .card-holder {
   width: 100%;
