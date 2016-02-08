@@ -5,10 +5,11 @@
 
 require(dirname(__FILE__).'/../lib//simple_html_dom.php');
 
+$uri = htmlspecialchars($_GET["uri"]);
 
 ini_set('max_execution_time', 300);
-
-$base_url = 'https://pro.beatport.com/track/neptune-original-mix/7584051';
+$error = new StdClass();
+$base_url = $uri;
 if(strpos($base_url, '//pro.beatport.com/track/') > 0){
   $extra_fetch_url = '?_pjax=%23pjax-inner-wrapper';
   $html = file_get_html($base_url.$extra_fetch_url);
@@ -21,9 +22,11 @@ if(strpos($base_url, '//pro.beatport.com/track/') > 0){
       $trackJSON = substr($html,$staring, $ending-$staring);  // returns "abcde"
       echo $trackJSON; 
   } catch (Exception $e) {
-      echo "{error: 'Error with the link, contact support.'}";
+      $error->error = "Error with the link. Check there are no white space before and after the url. Otherwise, contact support.";
+      echo json_encode($error);
   }
 } else {
-  echo "{error: 'URL not valid.'}";
+  $error->error = "URL not valid.";
+      echo json_encode($error);
 }
 ?>

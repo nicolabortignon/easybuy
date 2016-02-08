@@ -21,6 +21,7 @@ h2 {
     margin: 30px 0 15px;
 }
 h4 {
+
   margin-bottom: 20px;
 }
 input {
@@ -198,4 +199,63 @@ input {
   float: right;
   top: 0;
   right: 0;
+}
+.releaseList{
+	line-height: 12px;
+}
+.releaseList .cover{
+	float: left;
+	display: block;
+}
+.releaseList .cover{
+	width: 50px;
+}
+#title{
+	margin-top: 25px;
+	display: block;
+}
+#artists{
+		display: block;
+}
+.card-deck .confirm{
+	max-width: 120px !important;
+	 cursor: pointer; cursor: hand;
+	background-color: #645c8f !important;
+	padding-top: 25px;
+	font-weight: 600px !important;
+}
+.card-deck .confirm:hover{
+
+	background-color: #8f87b9 !important;
+}
+.errorMessage {
+	color: #B395F0;
+	margin: 4px !important;
+	padding-bottom: 4px !important;
+	font-size: 16px !important;
+	font-weight: 300 !important;
+}
+
+.counter button{
+	background-color: #645c8f !important;
+	color: #fff;
+	font-size: 15px;
+	padding: 5px 10px 5px 10px;
+	border-radius: 3px;
+	border: 0px;
+	margin: 18px 5px 18px 5px;
+}
+.counter span{
+		color: #fff;
+	font-weight: 500;
+	font-size: 20px;
+}
+
+#date-range0{
+	color: #fff;
+	font-weight: 500;
+	font-size: 20px;
+	  background: transparent;
+    border: 0px !important;
+  padding: 17px 10px 17px 10px;
 }
