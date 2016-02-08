@@ -7,10 +7,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
   <link rel="stylesheet" href="styles/daterangepicker.css" />
-  <script src="jslib/jquery-1.11.2.min.js"></script>
   <script src="jslib/moment.min.js"></script>
   <script src="jslib/jquery.daterangepicker.js"></script>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   
 
   
@@ -37,13 +36,21 @@
   </div>
 </nav>
 <h2 class="add_track_title"> Add track </h2>
-<div class="colouredLine"> </div>
+ 
 <div class="card-holder">
-    <div class="card-deck-wrapper">
-      breadcramp
+    <div class="card-deck-wrapper text-center">
+      
+<ul id="breadcrumb">
+  <li><a href="index.html"><span class="fa fa-home"> </span></a></li>
+  <li><a href="#" id="goToStep1"><span class="fa fa-headphones"> </span> Select Track</a></li>
+  <li><a href="#" id="goToStep2"><span class="fa fa-tachometer"></span> Number of Downloads</a></li>
+  <li><a href="#" id="goToStep3"><span class="fa fa-calendar"> </span> Timeframe</a></li>
+  <li><a href="#"  id="goToStep4"><span class="fa fa-money"> </span> Pay</a></li>
+</ul>
+
     </div>
 </div>
-<div class="colouredLine"> </div>
+ 
 <div id="step1" class="container">
     <h3> Copy and paste, the link of your beatport track </h3>
     <small>Be careful to copy and paste the link of the track, not of the release. It needs to come from pro.beatport.com.
@@ -108,8 +115,28 @@
                 <div class="card counter">
                   <input id="date-range0" size="40" value="Click to select"> 
                 </div>
-                <div id="confirmSecondStep" class="card confirm">
+                <div id="confirmThirdStep" class="card confirm">
                   CONFIRM
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="step4" class="container">
+    <h3> Here we go. Time to pay. </h3>
+    <small>We distribute the downlaods through the time period in a smart way, using chart positions feedback, and days of the week.
+    </small>
+    <div class="card-holder">
+        <div class="card-deck-wrapper">
+            <div class="card-deck">
+                <div class="card details">
+                  Title:<span id="descriptionTitle">  </span><br />
+                  Number of Tracks: <span id="totalTracks"> </span> <br />
+                  Total cost per track: <span id="costPerTrack"> </span> <span id="costExplanation">(because is Exclusive)</span> <br />
+                  Total cost: <span id="descriptionTotalCost">  </span>
+                </div>
+                <div id="confirmFourthStep" class="card confirm">
+                  PAY
                 </div>
             </div>
         </div>
@@ -123,6 +150,10 @@ $( document ).ready(function() {
     var totalDownloads = 10;
     var startingDate = null;
     var endingDate = null;
+    var isExclusive = true;
+    var costPerTrack = 3.5;
+    var totalTracksToBuy = 10;
+    var totalCost = 3.5 * 10;
     /*
   define a new language named "custom"
   */
@@ -159,8 +190,9 @@ $( document ).ready(function() {
   };
     function test(){
       $("#step1").hide();
-      $("#step2").show();
+      $("#step2").hide();
       $("#step3").hide();
+      $("#step4").show();
     }
     function renderTotalAmount(){
       $('#stepCounter').text(totalDownloads);
@@ -257,6 +289,8 @@ $( document ).ready(function() {
 
 
     $("#step2").hide();
+    $("#step3").hide();
+    $("#step4").hide();
     $('#trackPrewiew').hide();
     $('#errorMessage1').hide();
     $("#searchTrack").click(function(e){
@@ -271,11 +305,24 @@ $( document ).ready(function() {
 
             } else {
               var manipulateData = data.replace(/\s+$/, '');
-              console.log(manipulateData);
+              
               manipulateData = manipulateData.substring(0, manipulateData.length-1);
               var releaseData = $.parseJSON(manipulateData);
+              console.log(releaseData);
+              isExclusive = (releaseData.tracks[0].price.value > 2);
+              $("#descriptionTitle").html(releaseData.tracks[0].title);
+
+              if(isExclusive){
+                $("#costPerTrack").html('3.50 euro');
+                costPerTrack = 3.5;
+                $("#costExplanation").html(' because is Exlcusive');
+              } else {
+                $("#costPerTrack").html('2.75 euro');
+                costPerTrack = 2.75;
+                $("#costExplanation").html(' because is not Exlcusive');
+              }
+              
               var artists = [];
-              console.log(releaseData.tracks[0].artists.length);
               for( var i = 0; i < releaseData.tracks[0].artists.length; i++){
                 artists.push(releaseData.tracks[0].artists[i].name);
                 console.log(releaseData.tracks[0].artists[i].name);
@@ -289,19 +336,59 @@ $( document ).ready(function() {
         });
       });
 
-    $("#confirmFirstStep").click(function(e){
+    function goToStep1(){
+      $("#step1").show();
+      $("#step2").hide();
+      $("#step3").hide();
+      $("#step4").hide();
+    }
+    function goToStep2(){
       $("#step1").hide();
       $("#step2").show();
       $("#step3").hide();
-    })
-
-    $("#confirmSecondStep").click(function(e){
+      $("#step4").hide();
+    }
+    function goToStep3(){
       $("#step1").hide();
       $("#step2").hide();
       $("#step3").show();
+      $("#step4").hide();
+    }
+    function goToStep4(){
+      $("#step1").hide();
+      $("#step2").hide();
+      $("#step3").hide();
+      $("#step4").show();
+    }
+
+    $("#goToStep1").click(function(e){
+      goToStep1();
+    });
+    $("#confirmFirstStep").click(function(e){
+       goToStep2();
+    })
+    $("#goToStep2").click(function(e){
+      goToStep2();
+    });
+    $("#confirmSecondStep").click(function(e){
+      totalTracksToBuy = totalDownloads;
+      goToStep3();
+    });
+    $("#goToStep3").click(function(e){
+      goToStep3();
+    });
+    $("#confirmThirdStep").click(function(e){
+      if(startingDate && endingDate){
+        $("#totalTracks").html(totalTracksToBuy);
+        $("#descriptionTotalCost").html(totalTracksToBuy * costPerTrack + ' euro');
+        goToStep4();
+      }
+    });
+    $("#goToStep4").click(function(e){
+      goToStep4();
     });
 
-    test();
+    //test();
     initListeners();
 
 });
