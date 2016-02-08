@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="styles/daterangepicker.css" />
   <script src="jslib/moment.min.js"></script>
   <script src="jslib/jquery.daterangepicker.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script src="https://checkout.stripe.com/checkout.js"></script>
 
   
   <title>EasyBuy</title>
@@ -391,6 +391,32 @@ $( document ).ready(function() {
     //test();
     initListeners();
 
+
+  var handler = StripeCheckout.configure({
+    key: 'pk_test_klNEMWHl4SxLWPfi1JAt9tlu',
+    image: 'images/minilogo.png',
+    locale: 'auto',
+    token: function(token) {
+      // Use the token to create the charge with a server-side script.
+      // You can access the token ID with `token.id`
+    }
+  });
+
+  $('#confirmFourthStep').on('click', function(e) {
+    // Open Checkout with further options
+    handler.open({
+      name: 'Easy Buy',
+      description: 'buy '+totalTracksToBuy+ ' tracks',
+      amount: totalTracksToBuy * costPerTrack * 100,
+      currency: 'eur'
+    });
+    e.preventDefault();
+  });
+
+  // Close Checkout on page navigation
+  $(window).on('popstate', function() {
+    handler.close();
+  });
 });
 </script>
 </html>
