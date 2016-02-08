@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" class="redesign no-js"  data-ffo-opensanslight=true data-ffo-opensans=true >
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+     
+  
+
+  
+  <title>EasyBuy</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <link rel="home" href="/en-US/">
+  <link rel="copyright" href="#copyright">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,100italic,300italic,900italic,900,700italic,700,400italic' rel='stylesheet' type='text/css'>
+    <link href="https://cask.scotch.io/bootstrap-4.0.css" rel="stylesheet" type="text/css" />
+    <link href="https://cask.scotch.io/bootstrap-4.0-flex.css" rel="stylesheet" type="text/css" />
+    <link href="styles/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body data-slug="Web/HTML/Element/meta" contextmenu="edit-history-menu" data-search-url="" class="document normalPage bodyMarginTop">
+<nav class="navbar menuColor">
+  <ul class="nav navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="#"><img src="images/logo_small.png" /> </a>
+    </li>
+  </ul>
+  <div class="form-inline pull-right">
+    <span href="#" class="btn btn-sm btn-info">Welcome username@asd.com</span>
+  </div>
+</nav>
+<h2 class="add_track_title"> Add track </h2>
+<div class="colouredLine"> </div>
+<div class="card-holder">
+    <div class="card-deck-wrapper">
+      breadcramp
+    </div>
+</div>
+<div class="colouredLine"> </div>
+<div id="step1" class="container">
+    <h3> Copy and paste, the link of your beatport track </h3>
+    <small>Be careful to copy and paste the link of the track, not of the release. It needs to come from pro.beatport.com.
+    <br />  Something like https://pro.beatport.com/track/neptune-original-mix/7584051 </small>
+    <div class="card-holder">
+        <div class="card-deck-wrapper">
+            <div class="card-deck">
+                <div class="card form">
+                  <input type="text" name="track_url" />
+                  <button type="submit" id="searchTrack" class="searchTrack"/> Process Link </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+$( document ).ready(function() {
+    $("#searchTrack").click(function(e){
+        $.get( "php/api/getBeatportTrackInfo.php", function( data ) {
+            var manipulateData = data.replace(/\s+$/, '');
+            var manipulateData = manipulateData.substring(0, manipulateData.length-1);
+
+            console.log($.parseJSON(manipulateData));
+        });
+      });
+
+});
+</script>
+</html>
