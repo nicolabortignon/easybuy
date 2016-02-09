@@ -1,6 +1,7 @@
 <?php
 require(dirname(__FILE__).'/../dbConnection.php');
 require(dirname(__FILE__).'/../lib/stripe/init.php');
+
 if ($_POST) {
   \Stripe\Stripe::setApiKey("sk_test_DPUooPMuUgV4NnuqQdmLeshI");
   $error = '';
@@ -21,9 +22,18 @@ if ($_POST) {
       'currency' => 'eur',
       'metadata'=>  $metaData));
     $success = 'Your payment was successful.';
-
-    $query = $this->mysqli->prepare("INSERT INTO gigs (userRequester, beatportLink, startDate, endDate, downloadsRequested, downloadsDone, downloadsApproved, isExclusive, totalCost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $query->bind_param("sssssssss", 1, $_POST['trackBeatportURL'], $_POST['startDate'], $_POST['endDate'], $_POST['numberOfDownloads'], 0, 0, $_POST['isExclusive'],$_POST['amount']);
+    
+    $trackBeatportURL =  $_POST['trackBeatportURL'];
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $numberOfDownloads = $_POST['numberOfDownloads'];
+    $isExclusive = $_POST['isExclusive'];
+    $amount = $_POST['amount'];
+    $userId = 1;
+    $downloadsDone = 0;
+    $downloadsApproved = 0;
+    $query = $mysqli->prepare("INSERT INTO gigs (userRequester, beatportLink, startDate, endDate, downloadsRequested, downloadsDone, downloadsApproved, isExclusive, totalCost) VALUES (?, ?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), ?, ?, ?, ?, ?)");
+    $query->bind_param("issssiiss",$userId,$trackBeatportURL,$startDate,$endDate,$numberOfDownloads,$downloadsDone,$downloadsApproved,$isExclusive,$amount);
     $query->execute();
     $query->close();
 

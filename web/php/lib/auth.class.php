@@ -50,10 +50,12 @@ class auth
 		
 		if(!isset($_COOKIE["auth_session"]))
 		{
+			echo 'no coookies';
 			$attcount = $this->getattempt($_SERVER['REMOTE_ADDR']);
-			
+			echo 'attempt '.$attcount;
 			if($attcount >= $this->auth_conf['max_attempts'])
 			{
+				echo ' too many attempt ? ';
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_lockedout'];
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_wait30'];
 				
@@ -72,7 +74,7 @@ class auth
 				else 
 				{
 					// Input is valid
-				
+					echo 'input is valid';
 					$password = $this->hashpass($password);
 				
 					$query = $this->mysqli->prepare("SELECT isactive FROM users WHERE username = ? AND password = ?");
@@ -84,6 +86,7 @@ class auth
 					$query->fetch();
 					$query->close();
 				
+					echo 'count '.$count;
 					if($count == 0)
 					{
 						// Username and / or password are incorrect
@@ -104,7 +107,7 @@ class auth
 					else 
 					{
 						// Username and password are correct
-						
+						echo 'that is correct';
 						if($isactive == "0")
 						{
 							// Account is not activated

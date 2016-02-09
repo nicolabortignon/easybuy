@@ -9,9 +9,8 @@
 	$password = $_POST["password"];
 	$reEntryPassword = $password;
 	$currency = $_POST["currency"];
-	echo 'ciao';
-	echo $username;
-	var_dump($auth->register($username, $password, $reEntryPassword, $email, $currency));
+
+	$auth->register($username, $password, $reEntryPassword, $email, $currency);
 
 
 

@@ -182,8 +182,6 @@ $( document ).ready(function() {
       currency: currency
     })
     .done(function( data ) {
-      alert(data);
-      console.log('called registration' + data);
       // should check here if everything went ok.
       login(username,password);
     });
@@ -208,7 +206,7 @@ $( document ).ready(function() {
       console.log('login data');
       console.log(data);
       console.log('----');
-      window.location.href = "user_profile.html";
+      // window.location.href = "user_profile.html";
     });
   }
 });

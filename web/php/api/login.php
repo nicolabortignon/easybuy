@@ -6,6 +6,7 @@
 	
 	$username = $_POST["username"];
 	$password = $_POST["password"];
-	$auth->login($username, $password);
+	echo 'calling login php';
+	var_dump($auth->login($username, $password));
 	
 ?>

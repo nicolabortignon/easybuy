@@ -286,7 +286,14 @@ $( document ).ready(function() {
       console.log('after open');
     });
 
-
+    var retriveUserInformation = function(){
+      $.getJSON( "php/api/userInfo.php", function( data ) {
+        console.log(data);
+         username = data.username;
+         console.log(username);
+      });
+    }
+    retriveUserInformation();
 
 
     $("#step2").hide();
@@ -406,9 +413,9 @@ $( document ).ready(function() {
         userId: 1,
         numberOfDownloads: totalTracksToBuy,
         trackBeatportURL: beatportURL,
-        startDate: startingDate,
-        endDate: endingDate,
-        isExclusivE: isExclusive
+        startDate: startingDate.valueOf()/1000,
+        endDate: endingDate.valueOf()/1000,
+        isExclusive: isExclusive
       } );
     }
   });
