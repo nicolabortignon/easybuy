@@ -22,8 +22,8 @@ if ($_POST) {
       'metadata'=>  $metaData));
     $success = 'Your payment was successful.';
 
-    $query = $this->mysqli->prepare("INSERT INTO gigs (userRequester, beatportLink, startDate, endDate, downloadsRequested, downloadsDone, downloadsApproved, isExclusive) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $query->bind_param("ssssssss", 1, $_POST['trackBeatportURL'], $_POST['startDate'], $_POST['endDate'], $_POST['numberOfDownloads'], 0, 0, $_POST['isExclusive'],$_POST['amount']);
+    $query = $this->mysqli->prepare("INSERT INTO gigs (userRequester, beatportLink, startDate, endDate, downloadsRequested, downloadsDone, downloadsApproved, isExclusive, totalCost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $query->bind_param("sssssssss", 1, $_POST['trackBeatportURL'], $_POST['startDate'], $_POST['endDate'], $_POST['numberOfDownloads'], 0, 0, $_POST['isExclusive'],$_POST['amount']);
     $query->execute();
     $query->close();
 
