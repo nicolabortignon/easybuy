@@ -154,6 +154,7 @@ $( document ).ready(function() {
     var costPerTrack = 3.5;
     var totalTracksToBuy = 10;
     var totalCost = 3.5 * 10;
+    var beatportURL = '';
     /*
   define a new language named "custom"
   */
@@ -296,6 +297,7 @@ $( document ).ready(function() {
     $("#searchTrack").click(function(e){
         var uri = $('#track_url').val();
         $.get( "php/api/getBeatportTrackInfo.php?uri="+encodeURI(uri), function( data ) {
+            beatportURL = uri;
             var manipulateData = data.replace(/\s+$/, '');
             if(manipulateData.substring(manipulateData.length-1,manipulateData.length) !== ';'){
               $('#trackPrewiew').hide();
@@ -397,8 +399,16 @@ $( document ).ready(function() {
     image: 'images/minilogo.png',
     locale: 'auto',
     token: function(token) {
-      // Use the token to create the charge with a server-side script.
-      // You can access the token ID with `token.id`
+      console.log(token.id);
+      $.post( "php/api/stripePayment.php", { 
+        stripeToken: token.id, 
+        amount: totalTracksToBuy * costPerTrack * 100, 
+        userId: 1,
+        numberOfDownloads: totalTracksToBuy,
+        trackBeatportURL: beatportURL,
+        startDate: startingDate,
+        endDate: endingDate
+      } );
     }
   });
 
