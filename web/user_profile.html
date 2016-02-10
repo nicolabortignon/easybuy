@@ -42,7 +42,7 @@
                         <h2>3 Tracks</h2>
                         <h3>25/60 Downloads</h3>
                     </p>
-                    <a href="#" class="btn btn-sm btn-info">Input new Track</a> 
+                    <a href="add_track.html" class="btn btn-sm btn-info">Input new Track</a> 
                     <br /><br />
                     <p class="card-text"><small class="text-muted">See current active 2 tracks status</small></p>
                 </div>
@@ -76,9 +76,8 @@
     <div class="card-holder">
         <div class="card-deck-wrapper">
             <div class="card-deck">
-                <div class="card">
-                    <img class="cover" src="https://geo-media.beatport.com/image_size_hq/350x350/12949542.jpg" width="80px"/>
-                    <span> asdasdsa <span>
+                <div id="tracksRequested" class="card">
+                  
                 </div>
             </div>
         </div>
@@ -109,7 +108,27 @@ $( document ).ready(function() {
            console.log(username);
         });
     }
+
+    var retriveTracksRequested = function(){
+      $.getJSON( "php/api/getTracksRequested.php?userId=86", function( data ) {
+        console.log(data);
+          var tracks = data;
+          var output = "";
+          for(var i=0; i < tracks.length; i++){  
+            var entry = '<div id="trackPrewiew" class="card-deck">' +
+                '<div class="card releaseList">' +
+                  '<img id="cover" class="cover" src="" .>' +
+                  '<div id="title"> </div>' +
+                  '<div id="artists"></div>' +
+                '</div>' +
+                '</div>';
+            output = output + entry;
+          }
+          $("#tracksRequested").html(output);
+        });
+    }
     retriveUserInformation();
+    retriveTracksRequested();
 });
 </script>
 </html>

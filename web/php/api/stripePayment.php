@@ -29,11 +29,13 @@ if ($_POST) {
     $numberOfDownloads = $_POST['numberOfDownloads'];
     $isExclusive = $_POST['isExclusive'];
     $amount = $_POST['amount'];
+    $title = $_POST['title'];
+    $cover = $_POST['cover'];
     $userId = 1;
     $downloadsDone = 0;
     $downloadsApproved = 0;
-    $query = $mysqli->prepare("INSERT INTO gigs (userRequester, beatportLink, startDate, endDate, downloadsRequested, downloadsDone, downloadsApproved, isExclusive, totalCost) VALUES (?, ?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), ?, ?, ?, ?, ?)");
-    $query->bind_param("issssiiss",$userId,$trackBeatportURL,$startDate,$endDate,$numberOfDownloads,$downloadsDone,$downloadsApproved,$isExclusive,$amount);
+    $query = $mysqli->prepare("INSERT INTO gigs (userRequester, beatportLink, startDate, endDate, downloadsRequested, downloadsDone, downloadsApproved, isExclusive, totalCost, title, cover) VALUES (?, ?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), ?, ?, ?, ?, ?, ? ,?)");
+    $query->bind_param("issssiissss",$userId,$trackBeatportURL,$startDate,$endDate,$numberOfDownloads,$downloadsDone,$downloadsApproved,$isExclusive,$amount, $title , $cover);
     $query->execute();
     $query->close();
 
