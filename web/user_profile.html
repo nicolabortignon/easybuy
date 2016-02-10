@@ -29,7 +29,7 @@
     </li>
   </ul>
   <div class="form-inline pull-right">
-    <span href="#" class="btn btn-sm btn-info">Welcome username@asd.com</span>
+    <span href="#" id="welcomeName" class="btn btn-sm btn-info"></span>
   </div>
 </nav>
 <div class="card-holder">
@@ -39,8 +39,8 @@
                 <div class="card-block">
                     <h4 class="card-title">Request a track to be bought</h4>
                     <p class="card-text">
-                        <h2>3 Tracks</h2>
-                        <h3>25/60 Downloads</h3>
+                        <h2><span id="numberOfTracks">3</span> Tracks</h2>
+                        <h3><span id="totalTracksDownloaded"></span>/<span id="totalTracksRequested"></span> Downloads</h3>
                     </p>
                     <a href="add_track.html" class="btn btn-sm btn-info">Input new Track</a> 
                     <br /><br />
@@ -60,7 +60,7 @@
             <div class="card">
                 <div class="card-block">
                     <h4 class="card-title">Your current money account</h4>
-                    <p class="card-text"><h1>90.0 &euro;</h1></p>
+                    <p class="card-text"><h1><span id="totalMoney">90.0</span> &euro;</h1></p>
                     <a href="#" class="btn btn-sm btn-info">Top Up Account</a>
                     <a href="#" class="btn btn-sm btn-info">Payment history</a>
                     <br /><br />
@@ -76,7 +76,7 @@
     <div class="card-holder">
         <div class="card-deck-wrapper">
             <div class="card-deck">
-                <div id="tracksRequested" class="card">
+                <div id="tracksRequested" >
                   
                 </div>
             </div>
@@ -101,34 +101,49 @@
 <script>
 $( document ).ready(function() {
     var username;
-
+    var uid;
     var retriveUserInformation = function(){
         $.getJSON( "php/api/userInfo.php", function( data ) {
            username = data.username;
-           console.log(username);
+           uid = data.uid;
+           $("#welcomeName").html(username);
+           $("#totalMoney").html(data.totalMoney/100);
+               retriveTracksRequested();
         });
     }
 
     var retriveTracksRequested = function(){
-      $.getJSON( "php/api/getTracksRequested.php?userId=86", function( data ) {
+      $.getJSON( "php/api/getTracksRequested.php?userId="+uid, function( data ) {
         console.log(data);
           var tracks = data;
           var output = "";
+          $("#numberOfTracks").html(tracks.length);
+
+          var totalTracksRequested = 0;
+          var totalTracksDownloaded = 0;
           for(var i=0; i < tracks.length; i++){  
+            totalTracksRequested += parseInt(tracks[i].downloadsRequested,10);
+            totalTracksDownloaded += parseInt(tracks[i].downloadsApproved,10);
+
             var entry = '<div id="trackPrewiew" class="card-deck">' +
                 '<div class="card releaseList">' +
-                  '<img id="cover" class="cover" src="" .>' +
-                  '<div id="title"> </div>' +
+                  '<img id="cover" class="cover" src="'+tracks[i].cover+'" .>' +
+                  '<div id="title">'+tracks[i].title+'</div>' +
                   '<div id="artists"></div>' +
+                  '<progress class="progress progress-info progress-bar-custom" value="'+tracks[i].downloadsApproved+'" max="'+tracks[i].downloadsRequested+'">50%</progress>' +
                 '</div>' +
                 '</div>';
             output = output + entry;
           }
           $("#tracksRequested").html(output);
+          console.log(totalTracksRequested, totalTracksDownloaded)
+          $("#totalTracksRequested").html(totalTracksRequested);
+          $("#totalTracksDownloaded").html(totalTracksDownloaded);
+
         });
     }
     retriveUserInformation();
-    retriveTracksRequested();
+
 });
 </script>
 </html>

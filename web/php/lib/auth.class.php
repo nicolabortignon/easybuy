@@ -1,7 +1,6 @@
 <?php
 include_once(dirname(__FILE__).'/../../../user_settings');
 include_once(dirname(__FILE__).'/../i18n/en.php');
-
 class auth
 {  
 	public $mysqli;
@@ -9,7 +8,6 @@ class auth
 	public $loc;
 	public $errormsg;
 	public $successmsg;
-
 	public $auth_conf;
 	public $site_name;
 	public $email_from;
@@ -17,7 +15,6 @@ class auth
 	public $base_url;
 	public $session_duration;
 	public $security_duration;
-
 	public $salt_1;
 	public $salt_2;
 	
@@ -26,7 +23,6 @@ class auth
 		$this->mysqli = $GLOBALS['mysqli'];
 		$this->lang = $GLOBALS['lang'];
 		$this->loc = $GLOBALS['loc'];
-
 		$this->auth_conf = $GLOBALS['auth_conf'];
 		$this->site_name = $this->auth_conf['site_name'];
 		$this->email_from = $this->auth_conf['email_from'];
@@ -51,6 +47,7 @@ class auth
 		if(!isset($_COOKIE["auth_session"]))
 		{
 			$attcount = $this->getattempt($_SERVER['REMOTE_ADDR']);
+			
 			if($attcount >= $this->auth_conf['max_attempts'])
 			{
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_lockedout'];
@@ -71,6 +68,7 @@ class auth
 				else 
 				{
 					// Input is valid
+				
 					$password = $this->hashpass($password);
 				
 					$query = $this->mysqli->prepare("SELECT isactive FROM users WHERE username = ? AND password = ?");
@@ -81,6 +79,7 @@ class auth
 					$count = $query->num_rows;
 					$query->fetch();
 					$query->close();
+				
 					if($count == 0)
 					{
 						// Username and / or password are incorrect
@@ -100,6 +99,8 @@ class auth
 					}
 					else 
 					{
+						// Username and password are correct
+						
 						if($isactive == "0")
 						{
 							// Account is not activated
@@ -115,7 +116,6 @@ class auth
 							// Account is activated
 							
 							$this->newsession($username);				
-
 							$this->LogActivity($username, "AUTH_LOGIN_SUCCESS", "User logged in");
 					
 							$this->successmsg[] = $this->lang[$this->loc]['auth']['login_success'];
@@ -169,6 +169,7 @@ class auth
 			if(count($this->errormsg) == 0)
 			{
 				// Input is valid
+				echo ' no errrors ';
 				$query = $this->mysqli->prepare("SELECT * FROM users WHERE username=?");
 				$query->bind_param("s", $username);
 				$query->execute();
@@ -261,7 +262,6 @@ class auth
 	
 	function newsession($username)
 	{
-
 		$hash = md5(microtime());
 		
 		// Fetch User ID :		
@@ -472,7 +472,6 @@ class auth
 	
 	function activate($username, $key)
 	{
-
 	
 		// Input verification
 	
@@ -538,7 +537,6 @@ class auth
 						$this->LogActivity($username, "AUTH_ACTIVATE_SUCCESS", "Activation successful. Key Entry deleted.");						
 						
 						$this->successmsg[] = $this->lang[$this->loc]['auth']['activate_success'];
-
 						return true;						
 					}
 					else
@@ -599,7 +597,6 @@ class auth
 				$this->LogActivity("UNKNOWN", "AUTH_CHANGEPASS_FAIL", "Username Incorrect ({$username})");				
 				
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['changepass_username_incorrect'];
-
 				return false;
 			}
 			else 
@@ -714,7 +711,6 @@ class auth
 	
 	function resetpass($username = '0', $email ='0', $key = '0', $newpass = '0', $verifynewpass = '0')
 	{
-
 	
 		$attcount = $this->getattempt($_SERVER['REMOTE_ADDR']);
 			
@@ -878,7 +874,6 @@ class auth
 	
 	function checkresetkey($username, $key)
 	{
-
 		
 		$attcount = $this->getattempt($_SERVER['REMOTE_ADDR']);
 			
@@ -959,7 +954,6 @@ class auth
 	
 	function deleteaccount($username, $password)
 	{
-
 	
 		if(strlen($username) == 0) { $this->errormsg[] = $this->lang[$this->loc]['auth']['deleteaccount_username_empty']; }
 		elseif(strlen($username) > 30) { $this->errormsg[] = $this->lang[$this->loc]['auth']['deleteaccount_username_long']; }
@@ -1134,7 +1128,6 @@ class auth
 	
 	function LogActivity($username, $action, $additionalinfo = "none")
 	{
-
 	
 		if(strlen($username) == 0) { $username = "GUEST"; }
 		elseif(strlen($username) < 3) { $this->errormsg[] = $this->lang[$this->loc]['auth']['logactivity_username_short']; return false; }
@@ -1160,7 +1153,6 @@ class auth
 			return true;
 		}
 	}
-
 	/*
 	* Hash user's password with SHA512, base64_encode, ROT13 and salts !
 	* @param string $password
@@ -1169,10 +1161,8 @@ class auth
 	
 	function hashpass($password)
 	{
-
 		$password = hash("SHA512", base64_encode(str_rot13(hash("SHA512", str_rot13($this->salt_1 . $password . $this->salt_2)))));
 		return $password;
 	}
 }
-
 ?>

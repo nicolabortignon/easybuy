@@ -6,11 +6,10 @@ if ($_GET) {
     if (!isset($_GET['userId']))
       throw new Exception("No user id");
 
-    $username = 86;
-    $result = $mysqli->query("SELECT * FROM gigs WHERE userRequester=".$username);
+    $userId = $_GET['userId'];
+    $result = $mysqli->query("SELECT * FROM gigs WHERE userRequester=".$userId);
     echo json_encode( $result->fetch_all( MYSQLI_ASSOC ) );
 
-    $result->close();
     $mysqli->close();
 
   }
