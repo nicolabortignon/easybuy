@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" class="redesign no-js"  data-ffo-opensanslight=true data-ffo-opensans=true >
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+  <script src="js/vendor/jquery.ui.widget.js"></script>
+  <script src="js/jquery.iframe-transport.js"></script>
+  <script src="js/jquery.fileupload.js"></script>
+  
+
+  
+  <title>EasyBuy</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <link rel="home" href="/en-US/">
+  <link rel="copyright" href="#copyright">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,100italic,300italic,900italic,900,700italic,700,400italic' rel='stylesheet' type='text/css'>
+    <link href="https://cask.scotch.io/bootstrap-4.0.css" rel="stylesheet" type="text/css" />
+    <link href="https://cask.scotch.io/bootstrap-4.0-flex.css" rel="stylesheet" type="text/css" />
+    <link href="styles/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body data-slug="Web/HTML/Element/meta" contextmenu="edit-history-menu" data-search-url="" class="document normalPage bodyMarginTop">
+<nav class="navbar menuColor">
+  <ul class="nav navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="#"><img src="images/logo_small.png" /> </a>
+    </li>
+  </ul>
+  <div class="form-inline pull-right">
+    <span href="#" id="welcomeName" class="btn btn-sm btn-info"></span>
+  </div>
+</nav>
+<div class="colouredLine"> </div>
+<div class="container">
+  <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Confirm your puchease</h3>
+        </div>
+        <div class="panel-body">
+            <ul>
+                <li>Buy the track on beatport (Click the cover to go straight to the page).</li>
+                <li>Take a snapshot of your receipt (sent by you by beatport)</li>
+                <li>If you don't receive the email, take a snapshot of your CART PAGE on beatport, where we can see your LOGIN NAME (top right corner) and the track bought.</li>
+                <li>Upload the snpashot by clicking the blue button 'ADD Screenshot'</li>
+                <li>Wait for our review.</li>
+                <li>Within 24h you'll receive <span id="money"> </span> in your account</li>
+            </ul>
+        </div>
+    </div>
+    <div id="upload">
+      <form  action="">
+          <div class="upload">
+              <input id="fileupload" type="file" name="files[]" data-url="php/upload/index.php" /><br /><br />
+          </div>
+      </form>
+    </div>
+    <div id="resultUpload">
+        <h3><br />Screenshot sucessfully uploaded. Wait for our review, and you'll receive the money within 24h <br /><br /> </h3>
+    </div>
+    <a id="coverLink" href="" target="_blank"><img id="cover" src=""></img></a>
+    <h2><span id="gigTitle"></span>  <br />
+    <div class="card-holder">
+        <div class="card-deck-wrapper">
+            <div class="card-deck">
+                <div id="tracksRequested" >
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="colouredLine"> </div>
+</body>
+<script>
+$( document ).ready(function() {
+    var username;
+    var uid;
+    $('#resultUpload').hide();
+
+    function getQueryStringValue (key) {  
+      return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+    }  
+
+    var retriveUserInformation = function(){
+        $.getJSON( "php/api/userInfo.php", function( data ) {
+           username = data.username;
+           uid = data.uid;
+           $("#welcomeName").html(username);
+               getTrackInfo();
+        });
+    }
+
+    var getTrackInfo = function(){
+      $.getJSON( "php/api/getGigInfo.php?idGig="+getQueryStringValue('idGig'), function( data ) {
+        if(data.length > 0){
+          $("#gigTitle").html(data[0].title);
+          $("#coverLink").attr("href",data[0].beatportLink);
+          $("#cover").attr("src",data[0].cover);
+          $("#money").html(data[0].isExclusive == 1 ? '3.00' : '2.5' );
+        }
+      });
+    }
+ 
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $('#upload').hide();
+            $('#resultUpload').show();
+            $.each(data.result.files, function (index, file) {
+                $('<p/>').text(file.name).appendTo(document.body);
+            });
+        }
+    });
+  
+
+    retriveUserInformation();
+
+});
+</script>
+</html>

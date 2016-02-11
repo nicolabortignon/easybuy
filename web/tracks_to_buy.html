@@ -32,47 +32,9 @@
     <span href="#" id="welcomeName" class="btn btn-sm btn-info"></span>
   </div>
 </nav>
-<div class="card-holder">
-    <div class="card-deck-wrapper">
-        <div class="card-deck">
-            <div class="card">
-                <div class="card-block">
-                    <h4 class="card-title">Request a track to be bought</h4>
-                    <p class="card-text">
-                        <h2><span id="numberOfTracks">3</span> Tracks</h2>
-                        <h3><span id="totalTracksDownloaded"></span>/<span id="totalTracksRequested"></span> Downloads</h3>
-                    </p>
-                    <a href="add_track.html" class="btn btn-sm btn-info">Input new Track</a> 
-                    <br /><br />
-                    <p class="card-text"><small class="text-muted">See current active 2 tracks status</small></p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-block">
-                    <h4 class="card-title">Buy tracks</h4>
-                    <p class="card-text"><h2><span id="tracksToBuy"></span></h2> 
-                        <h3>Tracks to buy</h3></p>
-                    <a href="tracks_to_buy.html" class="btn btn-sm btn-info">See list of tracks to buy</a>
-                    <br /><br />
-                    <p class="card-text"><small class="text-muted">See all the available tracks</small></p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-block">
-                    <h4 class="card-title">Your current money account</h4>
-                    <p class="card-text"><h1><span id="totalMoney">90.0</span> &euro;</h1></p>
-                    <a href="#" class="btn btn-sm btn-info">Top Up Account</a>
-                    <a href="#" class="btn btn-sm btn-info">Payment history</a>
-                    <br /><br />
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <div class="colouredLine"> </div>
 <div class="container">
-    <h2> Your tracks
+    <h2><span id="numberOfTracks"></span> Tracks you can buy <br /><small>(click on the cover to confirm purchease)</small>
     <div class="card-holder">
         <div class="card-deck-wrapper">
             <div class="card-deck">
@@ -94,14 +56,12 @@ $( document ).ready(function() {
            username = data.username;
            uid = data.uid;
            $("#welcomeName").html(username);
-           $("#totalMoney").html(data.totalMoney/100);
-               retriveTracksRequested();
                getTracksToBuy();
         });
     }
 
-    var retriveTracksRequested = function(){
-      $.getJSON( "php/api/getTracksRequested.php?userId="+uid, function( data ) {
+    var getTracksToBuy = function(){
+      $.getJSON( "php/api/tracksToBuy.php?userId="+uid, function( data ) {
         console.log(data);
           var tracks = data;
           var output = "";
@@ -115,10 +75,9 @@ $( document ).ready(function() {
 
             var entry = '<div id="trackPrewiew" class="card-deck">' +
                 '<div class="card releaseList">' +
-                  '<img id="cover" class="cover" src="'+tracks[i].cover+'" .>' +
-                  '<div id="title">'+tracks[i].title+'</div>' +
-                  '<div id="artists"></div>' +
-                  '<progress class="progress progress-info progress-bar-custom" value="'+tracks[i].downloadsApproved+'" max="'+tracks[i].downloadsRequested+'">50%</progress>' +
+                  '<a href="confirmTrackBought.html?idGig='+ tracks[i].id +'" ><img style="width: 70px !important"; id="cover" class="cover" src="'+tracks[i].cover+'" .></a>' +
+                  '<div id="title">'+tracks[i].title+' <br />'+ (tracks[i].isExclusive ? 'exclusive price' : 'standard price')+'</div>' +
+                  '<a href="'+ tracks[i].beatportLink +'" target="_blank" ><img src="images/buyOnBeatport.png" /></a>' +
                 '</div>' +
                 '</div>';
             output = output + entry;
@@ -128,14 +87,6 @@ $( document ).ready(function() {
           $("#totalTracksRequested").html(totalTracksRequested);
           $("#totalTracksDownloaded").html(totalTracksDownloaded);
 
-        });
-    }
-    var getTracksToBuy = function(){
-      $.getJSON( "php/api/tracksToBuy.php?userId="+uid, function( data ) {
-        console.log(data);
-          var tracks = data;
-          var output = "";
-          $("#tracksToBuy").html(tracks.length);
         });
     }
     retriveUserInformation();
