@@ -27,7 +27,7 @@
 <nav class="navbar menuColor">
   <ul class="nav navbar-nav">
     <li class="nav-item active">
-      <a class="nav-link" href="#"><img src="images/logo_small.png" /> </a>
+      <a class="nav-link" href="user_profile.html"><img src="images/logo_small.png" /> </a>
     </li>
   </ul>
   <div class="form-inline pull-right">
@@ -79,6 +79,7 @@
 $( document ).ready(function() {
     var username;
     var uid;
+    var isExclusive;
     $('#resultUpload').hide();
 
     function getQueryStringValue (key) {  
@@ -100,6 +101,7 @@ $( document ).ready(function() {
           $("#gigTitle").html(data[0].title);
           $("#coverLink").attr("href",data[0].beatportLink);
           $("#cover").attr("src",data[0].cover);
+          isExclusive = data[0].isExclusive;
           $("#money").html(data[0].isExclusive == 1 ? '3.00' : '2.5' );
         }
       });
@@ -110,9 +112,18 @@ $( document ).ready(function() {
         done: function (e, data) {
             $('#upload').hide();
             $('#resultUpload').show();
-            $.each(data.result.files, function (index, file) {
-                $('<p/>').text(file.name).appendTo(document.body);
-            });
+
+                console.log(data.result.files[0]);
+                var screenshotURL =  data.result.files[0];
+                var gigId = getQueryStringValue('idGig');
+                var buyerId = uid;
+              
+                $.post( "php/api/addPurcheasedTrack.php", { 
+                  screenshotURL: screenshotURL.url, 
+                  buyerId: buyerId, 
+                  gigId: gigId,
+                  isExclusive: isExclusive
+                });
         }
     });
   

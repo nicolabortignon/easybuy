@@ -34,7 +34,7 @@
 </nav>
 <div class="colouredLine"> </div>
 <div class="container">
-    <h2><span id="numberOfTracks"></span> Tracks you can buy <br /><small>(click on the cover to confirm purchease)</small>
+    <h2>Approve buy
     <div class="card-holder">
         <div class="card-deck-wrapper">
             <div class="card-deck">
@@ -48,24 +48,33 @@
 <div class="colouredLine"> </div>
 </body>
 <script>
+var username;
+var uid;
+function approvePurcheased(id){
+  console.log('approving purchease ' + id)
+}
 $( document ).ready(function() {
-    var username;
-    var uid;
+
     var retriveUserInformation = function(){
         $.getJSON( "php/api/userInfo.php", function( data ) {
            username = data.username;
            uid = data.uid;
+           isAdmin = data.isAdmin;
+           console.log(isAdmin);
+           if(isAdmin == '0'){
+            window.location.href = "user_profile.html";
+           }
            $("#welcomeName").html(username);
                getTracksToBuy();
         });
     }
 
     var getTracksToBuy = function(){
-      $.getJSON( "php/api/tracksToBuy.php?userId="+uid, function( data ) {
+      $.getJSON( "php/api/getTracksToConfirm.php", function( data ) {
         console.log(data);
           var tracks = data;
           var output = "";
-          $("#numberOfTracks").html(tracks.length);
+
 
           var totalTracksRequested = 0;
           var totalTracksDownloaded = 0;
@@ -76,8 +85,9 @@ $( document ).ready(function() {
             var entry = '<div id="trackPrewiew" class="card-deck">' +
                 '<div class="card releaseList">' +
                   '<a href="confirmTrackBought.html?idGig='+ tracks[i].id +'" ><img style="width: 70px !important"; id="cover" class="cover" src="'+tracks[i].cover+'" .></a>' +
-                  '<div id="title">'+tracks[i].title+' <br />'+ (tracks[i].isExclusive ? 'exclusive price' : 'standard price')+'</div>' +
-                  '<a href="'+ tracks[i].beatportLink +'" target="_blank" ><img src="images/buyOnBeatport.png" /></a>' +
+                  '<a href="'+tracks[i].screenshot+'" target="blank_"><img style="width: 70px !important"; class="cover" src="'+tracks[i].screenshot+'" ></a>'+
+                  '<div id="title">'+tracks[i].title+' <br />'+ (tracks[i].isExclusive ? 'exclusive price' : 'standard price')+'<br/> bought by '+tracks[i].username+'</div> <br /><br /> <hr />' +
+                  '<button onclick="approvePurcheased('+tracks[i].purcheasedTracksId+')" class="btn btn-sm btn-info"> Approve </button><br /><br />' +
                 '</div>' +
                 '</div>';
             output = output + entry;
@@ -89,6 +99,7 @@ $( document ).ready(function() {
 
         });
     }
+
     retriveUserInformation();
 
 });
