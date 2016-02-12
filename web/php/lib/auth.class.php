@@ -35,7 +35,7 @@ class auth
 		$this->mysqli = $GLOBALS['mysqli'];
 		$this->lang = $GLOBALS['lang'];
 		$this->loc = $GLOBALS['loc'];
-		$this->auth_conf = $GLOBALS['auth_conf'];
+		$this->auth_conf = $auth_conf;
 		$this->site_name = $this->auth_conf['site_name'];
 		$this->email_from = $this->auth_conf['email_from'];
 		$this->max_attempts = $this->auth_conf['max_attempts'];
