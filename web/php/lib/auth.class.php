@@ -51,6 +51,8 @@ class auth
 			
 			if($attcount >= $this->auth_conf['max_attempts'])
 			{
+				echo $auth_conf;
+				echo '---';
 				echo 'trying too hard';
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_lockedout'];
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_wait30'];
