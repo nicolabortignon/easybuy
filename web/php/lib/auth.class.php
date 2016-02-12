@@ -46,10 +46,12 @@ class auth
 		
 		if(!isset($_COOKIE["auth_session"]))
 		{
+			echo 'me got no cookie';
 			$attcount = $this->getattempt($_SERVER['REMOTE_ADDR']);
 			
 			if($attcount >= $this->auth_conf['max_attempts'])
 			{
+				echo 'trying too hard';
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_lockedout'];
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_wait30'];
 				
@@ -58,7 +60,7 @@ class auth
 			else 
 			{
 				// Input verification :
-			
+				echo 'start validating';
 				if(strlen($username) == 0) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_empty']; return $this->errormsg; }
 				elseif(strlen($username) > 30) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_long']; return $this->errormsg; }
 				elseif(strlen($username) < 3) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_short']; return $this->errormsg; }
@@ -68,7 +70,7 @@ class auth
 				else 
 				{
 					// Input is valid
-				
+					echo 'validations done';
 					$password = $this->hashpass($password);
 				
 					$query = $this->mysqli->prepare("SELECT isactive FROM users WHERE username = ? AND password = ?");
@@ -129,7 +131,7 @@ class auth
 		else 
 		{
 			// User is already logged in
-			
+			echo 'me got cookie';
 			$this->errormsg[] = $this->lang[$this->loc]['auth']['login_already'];
 			
 			return $this->errormsg;
