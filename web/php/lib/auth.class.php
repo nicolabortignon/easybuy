@@ -184,7 +184,7 @@ class auth
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_lockedout'];
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_wait30'];
 				
-				return $this->errormsg;
+				return json_encode($this->errormsg);
 			}
 			else 
 			{
@@ -214,7 +214,7 @@ class auth
 					if($count == 0)
 					{
 						// Username and / or password are incorrect
-			
+						$this->errormsg[] = 0;
 						$this->errormsg[] = $this->lang[$this->loc]['auth']['login_incorrect'];
 						
 						$this->addattempt($_SERVER['REMOTE_ADDR']);
@@ -226,7 +226,7 @@ class auth
 						
 						$this->errormsg[] = sprintf($this->lang[$this->loc]['auth']['login_attempts_remaining'], $remaincount);
 						
-						return $this->errormsg;
+						return json_encode($this->errormsg);
 					}
 					else 
 					{
@@ -239,8 +239,8 @@ class auth
 							$this->LogActivity($username, "AUTH_LOGIN_FAIL", "Account inactive");
 							
 							$this->errormsg[] = $this->lang[$this->loc]['auth']['login_account_inactive'];
-							
-							return $this->errormsg;
+							$this->errormsg[] = 0;
+							return json_encode($this->errormsg);
 						}
 						else
 						{
@@ -248,10 +248,10 @@ class auth
 							
 							$this->newsession($username);				
 							$this->LogActivity($username, "AUTH_LOGIN_SUCCESS", "User logged in");
-					
+							$this->successmsg[] = 1;
 							$this->successmsg[] = $this->lang[$this->loc]['auth']['login_success'];
 							
-							return $this->successmsg;
+							return json_encode($this->successmsg);
 						}
 					}
 				}
@@ -261,9 +261,10 @@ class auth
 		{
 			// User is already logged in
 			echo 'me got cookie';
+			$this->errormsg[] = 1;
 			$this->errormsg[] = $this->lang[$this->loc]['auth']['login_already'];
 			
-			return $this->errormsg;
+			return json_encode($this->errormsg);
 		}
 	}
 	
@@ -315,7 +316,7 @@ class auth
 					$this->LogActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Username ({$username}) already exists");
 				
 					$this->errormsg[] = $this->lang[$this->loc]['auth']['register_username_exist'];
-					
+					$this->errormsg[] = 0;
 					return $this->errormsg;
 				}
 				else 
@@ -336,8 +337,8 @@ class auth
 						$this->LogActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Email ({$email}) already exists");
 					
 						$this->errormsg[] = $this->lang[$this->loc]['auth']['register_email_exist'];
-						
-						return $this->errormsg;					
+						$this->errormsg[] = 0;
+						return json_encode($this->errormsg);					
 					}
 					else 
 					{
@@ -364,16 +365,17 @@ class auth
 						mail($email, $message_subj, $message_cont, $message_head);
 					
 						$this->LogActivity($username, "AUTH_REGISTER_SUCCESS", "Account created and activation email sent");
-					
+						$this->successmsg[] = 1;
 						$this->successmsg[] = $this->lang[$this->loc]['auth']['register_success'];
 						
-						return true;					
+						return json_encode($this->successmsg);					
 					}
 				}			
 			}
 			else 
 			{
-				return $this->errormsg;
+				$this->successmsg[] = 0;
+				return json_encode($this->errormsg);
 			}
 		}
 		else 
@@ -381,8 +383,8 @@ class auth
 			// User is logged in
 		
 			$this->errormsg[] = $this->lang[$this->loc]['auth']['register_email_loggedin'];
-			
-			return $this->errormsg;
+			$this->successmsg[] = 0;
+			return json_encode($this->errormsg);
 		}
 	}
 	
