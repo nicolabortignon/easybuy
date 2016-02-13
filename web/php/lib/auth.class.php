@@ -173,14 +173,11 @@ class auth
 		
 		if(!isset($_COOKIE["auth_session"]))
 		{
-			echo 'me got no cookie';
 			$attcount = $this->getattempt($_SERVER['REMOTE_ADDR']);
 			
 			if($attcount >= $this->auth_conf['max_attempts'])
 			{
-				echo $auth_conf;
-				echo '---';
-				echo 'trying too hard';
+
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_lockedout'];
 				$this->errormsg[] = $this->lang[$this->loc]['auth']['login_wait30'];
 				
@@ -189,7 +186,6 @@ class auth
 			else 
 			{
 				// Input verification :
-				echo 'start validating';
 				if(strlen($username) == 0) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_empty']; return $this->errormsg; }
 				elseif(strlen($username) > 30) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_long']; return $this->errormsg; }
 				elseif(strlen($username) < 3) { $this->errormsg[] = $this->lang[$this->loc]['auth']['login_username_short']; return $this->errormsg; }
@@ -199,7 +195,6 @@ class auth
 				else 
 				{
 					// Input is valid
-					echo 'validations done';
 					$password = $this->hashpass($password);
 				
 					$query = $this->mysqli->prepare("SELECT isactive FROM users WHERE username = ? AND password = ?");
@@ -248,7 +243,7 @@ class auth
 							
 							$this->newsession($username);				
 							$this->LogActivity($username, "AUTH_LOGIN_SUCCESS", "User logged in");
-							$this->successmsg[] = 1;
+							$this->successmsg['result'] = 1;
 							$this->successmsg[] = $this->lang[$this->loc]['auth']['login_success'];
 							
 							return json_encode($this->successmsg);
@@ -260,8 +255,7 @@ class auth
 		else 
 		{
 			// User is already logged in
-			echo 'me got cookie';
-			$this->errormsg[] = 1;
+			$this->errormsg['result'] = 1;
 			$this->errormsg[] = $this->lang[$this->loc]['auth']['login_already'];
 			
 			return json_encode($this->errormsg);
@@ -301,7 +295,6 @@ class auth
 			if(count($this->errormsg) == 0)
 			{
 				// Input is valid
-				echo ' no errrors ';
 				$query = $this->mysqli->prepare("SELECT * FROM users WHERE username=?");
 				$query->bind_param("s", $username);
 				$query->execute();
@@ -337,7 +330,7 @@ class auth
 						$this->LogActivity("UNKNOWN", "AUTH_REGISTER_FAIL", "Email ({$email}) already exists");
 					
 						$this->errormsg[] = $this->lang[$this->loc]['auth']['register_email_exist'];
-						$this->errormsg[] = 0;
+						$this->errormsg['result'] = 0;
 						return json_encode($this->errormsg);					
 					}
 					else 
@@ -365,7 +358,7 @@ class auth
 						mail($email, $message_subj, $message_cont, $message_head);
 					
 						$this->LogActivity($username, "AUTH_REGISTER_SUCCESS", "Account created and activation email sent");
-						$this->successmsg[] = 1;
+						$this->successmsg['result'] = 1;
 						$this->successmsg[] = $this->lang[$this->loc]['auth']['register_success'];
 						
 						return json_encode($this->successmsg);					
@@ -374,7 +367,7 @@ class auth
 			}
 			else 
 			{
-				$this->successmsg[] = 0;
+				$this->successmsg['result'] = 0;
 				return json_encode($this->errormsg);
 			}
 		}
@@ -383,7 +376,7 @@ class auth
 			// User is logged in
 		
 			$this->errormsg[] = $this->lang[$this->loc]['auth']['register_email_loggedin'];
-			$this->successmsg[] = 0;
+			$this->successmsg['result'] = 0;
 			return json_encode($this->errormsg);
 		}
 	}
