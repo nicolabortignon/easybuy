@@ -206,9 +206,9 @@ $( document ).ready(function() {
     })
     .done(function( data ) {
       console.log('login data');
-      console.log(data);
-      console.log('----');
-      //window.location.href = "user_profile.html";
+      if($.parseJSON(data).result == 1){
+        window.location.href = "user_profile.html";
+      }
     });
   }
 });
