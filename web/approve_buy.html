@@ -51,7 +51,9 @@
 var username;
 var uid;
 function approvePurcheased(id){
-  console.log('approving purchease ' + id)
+  $.post("php/api/approveTrack.php", { 
+                  id: id
+                });
 }
 $( document ).ready(function() {
 

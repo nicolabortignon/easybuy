@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" class="redesign no-js"  data-ffo-opensanslight=true data-ffo-opensans=true >
+<head prefix="og: http://ogp.me/ns#">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.1.1/js/tether.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+  <link rel="stylesheet" href="styles/daterangepicker.css" />
+  <script src="jslib/moment.min.js"></script>
+  <script src="jslib/jquery.daterangepicker.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script src="https://checkout.stripe.com/checkout.js"></script>
+
+  
+  <title>EasyBuy</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <link rel="home" href="/en-US/">
+  <link rel="copyright" href="#copyright">
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,100italic,300italic,900italic,900,700italic,700,400italic' rel='stylesheet' type='text/css'>
+    <link href="https://cask.scotch.io/bootstrap-4.0.css" rel="stylesheet" type="text/css" />
+    <link href="https://cask.scotch.io/bootstrap-4.0-flex.css" rel="stylesheet" type="text/css" />
+    <link href="styles/main.css" rel="stylesheet" type="text/css" />
+</head>
+<body data-slug="Web/HTML/Element/meta" contextmenu="edit-history-menu" data-search-url="" class="document normalPage bodyMarginTop">
+<nav class="navbar menuColor">
+  <ul class="nav navbar-nav">
+    <li class="nav-item active">
+      <a class="nav-link" href="user_profile.html"><img src="images/logo_small.png" /> </a>
+    </li>
+  </ul>
+  <div class="form-inline pull-right">
+    <span href="#" class="btn btn-sm btn-info">Welcome username@asd.com</span>
+  </div>
+</nav>
+<h2 class="add_track_title"> Add track </h2>
+ 
+<div class="card-holder">
+    <div class="card-deck-wrapper text-center">
+      
+<ul id="breadcrumb">
+  <li><a href="index.html"><span class="fa fa-home"> </span></a></li>
+  <li><a href="#" id="goToStep1"><span class="fa fa-headphones"> </span> Select Track</a></li>
+  <li><a href="#" id="goToStep2"><span class="fa fa-tachometer"></span> Number of Downloads</a></li>
+  <li><a href="#" id="goToStep3"><span class="fa fa-calendar"> </span> Timeframe</a></li>
+  <li><a href="#"  id="goToStep4"><span class="fa fa-money"> </span> Pay</a></li>
+</ul>
+
+    </div>
+</div>
+ 
+<div id="step1" class="container">
+    <h3> Copy and paste, the link of your beatport track </h3>
+    <small>Be careful to copy and paste the link of the track, not of the release. It needs to come from pro.beatport.com.
+    <br />  Something like https://pro.beatport.com/track/neptune-original-mix/7584051 </small>
+    <div class="card-holder">
+        <div class="card-deck-wrapper">
+            <div class="card-deck">
+                <div class="card form">
+                  <input type="text" id="track_url" name="track_url" />
+                  <button type="submit" id="searchTrack" class="searchTrack"/> Process Link </button>
+                </div>
+            </div>
+            <div id="trackPrewiew" class="card-deck">
+                <div class="card releaseList">
+                  <img id="cover" class="cover" src="" .>
+                  <div id="title"> </div>
+                  <div id="artists"></div>
+                </div>
+                <div id="confirmFirstStep" class="card confirm">
+                  CONFIRM
+                </div>
+            </div>
+            <div id="errorMessage1" class="card-deck">
+                <div class="card releaseList">
+                  <h3 class="errorMessage" id="errorMessage1text"> </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="step2" class="container">
+    <h3> How many downloads do you need? </h3>
+    <small>We accept only a minimum of 10 downloads. Why? Everytime you pay for get tracks download, we are charged on the transaction. We need a minimum order to not loose money on that transaction fee.</small>
+    <div class="card-holder">
+        <div class="card-deck-wrapper">
+            <div class="card-deck">
+                <div class="card counter">
+                  <button id="minus20"> -20 </button>
+                  <button id="minus10"> -10 </button>
+                  <button id="minus5"> -5 </button>
+                  <button id="minus"> - </button>
+                  <span id="stepCounter"> 10 </span>
+                  <button id="plus"> + </button>
+                  <button id="plus5"> +5 </button>
+                  <button id="plus10"> +10 </button>
+                  <button id="plus20"> +20 </button>
+                </div>
+                <div id="confirmSecondStep" class="card confirm">
+                  CONFIRM
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="step3" class="container">
+    <h3> From when to when do you need them? </h3>
+    <small>We distribute the downlaods through the time period in a smart way, using chart positions feedback, and days of the week.
+    </small>
+    <div class="card-holder">
+        <div class="card-deck-wrapper">
+            <div class="card-deck">
+                <div class="card counter">
+                  <input id="date-range0" size="40" value="Click to select"> 
+                </div>
+                <div id="confirmThirdStep" class="card confirm">
+                  CONFIRM
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="step4" class="container">
+    <h3> Here we go. Time to pay. </h3>
+    <small>We distribute the downlaods through the time period in a smart way, using chart positions feedback, and days of the week.
+    </small>
+    <div class="card-holder">
+        <div class="card-deck-wrapper">
+            <div class="card-deck">
+                <div class="card details">
+                  Title:<span id="descriptionTitle">  </span><br />
+                  Number of Tracks: <span id="totalTracks"> </span> <br />
+                  Total cost per track: <span id="costPerTrack"> </span> <span id="costExplanation">(because is Exclusive)</span> <br />
+                  Total cost: <span id="descriptionTotalCost">  </span>
+                </div>
+                <div id="confirmFourthStep" class="card confirm">
+                  PAY
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+$( document ).ready(function() {
+
+    var MINIMUM_AMOUNT_OF_DOWNLOAD = 10;
+    var totalDownloads = 10;
+    var startingDate = null;
+    var endingDate = null;
+    var isExclusive = true;
+    var costPerTrack = 3.5;
+    var totalTracksToBuy = 10;
+    var totalCost = 3.5 * 10;
+    var beatportURL = '';
+    var globalTitle = '';
+    var globalCover = '';
+    /*
+  define a new language named "custom"
+  */
+
+  $.dateRangePickerLanguages['custom'] = 
+  {
+    'selected': 'Choosed:',
+    'days': 'Days',
+    'apply': 'Close',
+    'week-1' : 'Mon',
+    'week-2' : 'Tue',
+    'week-3' : 'Wed',
+    'week-4' : 'Thu',
+    'week-5' : 'Fri',
+    'week-6' : 'Sat',
+    'week-7' : 'Sun',
+    'month-name': ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    'shortcuts' : 'Shortcuts',
+    'past': 'Past',
+    '7days' : '7days',
+    '14days' : '14days',
+    '30days' : '30days',
+    'previous' : 'Previous',
+    'prev-week' : 'Week',
+    'prev-month' : 'Month',
+    'prev-quarter' : 'Quarter',
+    'prev-year' : 'Year',
+    'less-than' : 'Date range should longer than %d days',
+    'more-than' : 'Date range should less than %d days',
+    'default-more' : 'Please select a date range longer than %d days',
+    'default-less' : 'Please select a date range less than %d days',
+    'default-range' : 'Please select a date range between %d and %d days',
+    'default-default': 'This is costom language'
+  };
+    function test(){
+      $("#step1").hide();
+      $("#step2").hide();
+      $("#step3").hide();
+      $("#step4").show();
+    }
+    function renderTotalAmount(){
+      $('#stepCounter').text(totalDownloads);
+    }
+    
+    function initListeners(){
+      $('#minus20').click(function(e){
+        totalDownloads = Math.max(MINIMUM_AMOUNT_OF_DOWNLOAD, totalDownloads-20);
+        renderTotalAmount();
+      });
+      $('#plus20').click(function(e){
+        totalDownloads = Math.max(MINIMUM_AMOUNT_OF_DOWNLOAD, totalDownloads+20);
+        renderTotalAmount();
+      });
+      $('#minus10').click(function(e){
+        totalDownloads = Math.max(MINIMUM_AMOUNT_OF_DOWNLOAD, totalDownloads-10);
+        renderTotalAmount();
+      });
+      $('#plus10').click(function(e){
+        totalDownloads = Math.max(MINIMUM_AMOUNT_OF_DOWNLOAD, totalDownloads+10);
+        renderTotalAmount();
+      });
+      $('#minus5').click(function(e){
+        totalDownloads = Math.max(MINIMUM_AMOUNT_OF_DOWNLOAD, totalDownloads-5);
+        renderTotalAmount();
+      });
+      $('#plus5').click(function(e){
+        totalDownloads = Math.max(MINIMUM_AMOUNT_OF_DOWNLOAD, totalDownloads+5);
+        renderTotalAmount();
+      });
+      $('#minus').click(function(e){
+        totalDownloads = Math.max(MINIMUM_AMOUNT_OF_DOWNLOAD, totalDownloads-1);
+        renderTotalAmount();
+      });
+      $('#plus').click(function(e){
+        totalDownloads = Math.max(MINIMUM_AMOUNT_OF_DOWNLOAD, totalDownloads+1);
+        renderTotalAmount();
+      });
+    }
+
+    $('#date-range0').dateRangePicker(
+    {
+      startDate: new Date()
+    }).bind('datepicker-first-date-selected', function(event, obj)
+    {
+      /* This event will be triggered when first date is selected */
+      console.log('first-date-selected',obj);
+      // obj will be something like this:
+      // {
+      //    date1: (Date object of the earlier date)
+      // }
+    })
+    .bind('datepicker-change',function(event,obj)
+    {
+      /* This event will be triggered when second date is selected */
+      console.log('change',obj);
+      startingDate = obj.date1;
+      endingDate = obj.date2;
+      // obj will be something like this:
+      // {
+      //    date1: (Date object of the earlier date),
+      //    date2: (Date object of the later date),
+      //    value: "2013-06-05 to 2013-06-07"
+      // }
+    })
+    .bind('datepicker-apply',function(event,obj)
+    {
+      /* This event will be triggered when user clicks on the apply button */
+      console.log('apply',obj);
+    })
+    .bind('datepicker-close',function()
+    {
+      /* This event will be triggered before date range picker close animation */
+      console.log('before close');
+    })
+    .bind('datepicker-closed',function()
+    {
+      /* This event will be triggered after date range picker close animation */
+      console.log('after close');
+      console.log(startingDate, endingDate);
+    })
+    .bind('datepicker-open',function()
+    {
+      /* This event will be triggered before date range picker open animation */
+      console.log('before open');
+    })
+    .bind('datepicker-opened',function()
+    {
+      /* This event will be triggered after date range picker open animation */
+      console.log('after open');
+    });
+
+    var retriveUserInformation = function(){
+      $.getJSON( "php/api/userInfo.php", function( data ) {
+        console.log(data);
+         username = data.username;
+         console.log(username);
+      });
+    }
+    retriveUserInformation();
+
+
+    $("#step2").hide();
+    $("#step3").hide();
+    $("#step4").hide();
+    $('#trackPrewiew').hide();
+    $('#errorMessage1').hide();
+    $("#searchTrack").click(function(e){
+        var uri = $('#track_url').val();
+        $.get( "php/api/getBeatportTrackInfo.php?uri="+encodeURI(uri), function( data ) {
+            beatportURL = uri;
+            var manipulateData = data.replace(/\s+$/, '');
+            if(manipulateData.substring(manipulateData.length-1,manipulateData.length) !== ';'){
+              $('#trackPrewiew').hide();
+              $('#errorMessage1').show();
+              var error = $.parseJSON(data);
+              $('#errorMessage1text').html(error.error);
+
+            } else {
+              var manipulateData = data.replace(/\s+$/, '');
+              
+              manipulateData = manipulateData.substring(0, manipulateData.length-1);
+              var releaseData = $.parseJSON(manipulateData);
+              console.log(releaseData);
+              isExclusive = (releaseData.tracks[0].price.value > 2);
+              $("#descriptionTitle").html(releaseData.tracks[0].title);
+
+              if(isExclusive){
+                $("#costPerTrack").html('3.50 euro');
+                costPerTrack = 3.5;
+                $("#costExplanation").html(' because is Exlcusive');
+              } else {
+                $("#costPerTrack").html('2.75 euro');
+                costPerTrack = 2.75;
+                $("#costExplanation").html(' because is not Exlcusive');
+              }
+              
+              var artists = [];
+              for( var i = 0; i < releaseData.tracks[0].artists.length; i++){
+                artists.push(releaseData.tracks[0].artists[i].name);
+                console.log(releaseData.tracks[0].artists[i].name);
+              }
+              $('#trackPrewiew').show();
+              $('#errorMessage1').hide();
+              $('#title').html(releaseData.tracks[0].title);
+              $('#artists').html(artists.join());
+              globalTitle = releaseData.tracks[0].title;
+              globalCover = releaseData.tracks[0].images.large.url;
+              $("#cover").attr("src",releaseData.tracks[0].images.large.url);
+            }
+        });
+      });
+
+    function goToStep1(){
+      $("#step1").show();
+      $("#step2").hide();
+      $("#step3").hide();
+      $("#step4").hide();
+    }
+    function goToStep2(){
+      $("#step1").hide();
+      $("#step2").show();
+      $("#step3").hide();
+      $("#step4").hide();
+    }
+    function goToStep3(){
+      $("#step1").hide();
+      $("#step2").hide();
+      $("#step3").show();
+      $("#step4").hide();
+    }
+    function goToStep4(){
+      $("#step1").hide();
+      $("#step2").hide();
+      $("#step3").hide();
+      $("#step4").show();
+    }
+
+    $("#goToStep1").click(function(e){
+      goToStep1();
+    });
+    $("#confirmFirstStep").click(function(e){
+       goToStep2();
+    })
+    $("#goToStep2").click(function(e){
+      goToStep2();
+    });
+    $("#confirmSecondStep").click(function(e){
+      totalTracksToBuy = totalDownloads;
+      goToStep3();
+    });
+    $("#goToStep3").click(function(e){
+      goToStep3();
+    });
+    $("#confirmThirdStep").click(function(e){
+      if(startingDate && endingDate){
+        $("#totalTracks").html(totalTracksToBuy);
+        $("#descriptionTotalCost").html(totalTracksToBuy * costPerTrack + ' euro');
+        goToStep4();
+      }
+    });
+    $("#goToStep4").click(function(e){
+      goToStep4();
+    });
+
+    //test();
+    initListeners();
+
+
+  var handler = StripeCheckout.configure({
+    key: 'pk_test_klNEMWHl4SxLWPfi1JAt9tlu',
+    image: 'images/minilogo.png',
+    locale: 'auto',
+    token: function(token) {
+      console.log(token.id);
+      $.post( "php/api/stripePayment.php", { 
+        stripeToken: token.id, 
+        amount: totalTracksToBuy * costPerTrack * 100, 
+        userId: 1,
+        numberOfDownloads: totalTracksToBuy,
+        trackBeatportURL: beatportURL,
+        startDate: startingDate.valueOf()/1000,
+        endDate: endingDate.valueOf()/1000,
+        isExclusive: isExclusive,
+        title: globalTitle,
+        cover: globalCover
+      } );
+    }
+  });
+
+  $('#confirmFourthStep').on('click', function(e) {
+    // Open Checkout with further options
+    handler.open({
+      name: 'Easy Buy',
+      description: 'buy '+totalTracksToBuy+ ' tracks',
+      amount: totalTracksToBuy * costPerTrack * 100,
+      currency: 'eur'
+    });
+    e.preventDefault();
+  });
+
+  // Close Checkout on page navigation
+  $(window).on('popstate', function() {
+    handler.close();
+  });
+});
+</script>
+</html>

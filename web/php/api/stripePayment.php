@@ -31,7 +31,7 @@ if ($_POST) {
     $amount = $_POST['amount'];
     $title = $_POST['title'];
     $cover = $_POST['cover'];
-    $userId = 1;
+    $userId = $_POST['userId'];
     $downloadsDone = 0;
     $downloadsApproved = 0;
     $query = $mysqli->prepare("INSERT INTO gigs (userRequester, beatportLink, startDate, endDate, downloadsRequested, downloadsDone, downloadsApproved, isExclusive, totalCost, title, cover) VALUES (?, ?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), ?, ?, ?, ?, ?, ? ,?)");
