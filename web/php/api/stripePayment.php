@@ -1,7 +1,7 @@
 <?php
 require(dirname(__FILE__).'/../dbConnection.php');
 require(dirname(__FILE__).'/../lib/stripe/init.php');
-
+try {
 if ($_POST) {
   \Stripe\Stripe::setApiKey("sk_test_DPUooPMuUgV4NnuqQdmLeshI");
   $error = '';
@@ -48,5 +48,10 @@ if ($_POST) {
   }
 }
 echo 'no post no party';
+}
+  catch (Exception $e) {
+    $error = $e->getMessage();
+    echo $error;  
+  }
 ?>
 
