@@ -13,7 +13,8 @@ if ($_POST) {
     $trackToApprove = $result->fetch_all( MYSQLI_ASSOC );
     $setToTrue = 1;
     $query = $mysqli->query("UPDATE purcheasedTracks SET confirmed=1 WHERE id=".$id);
-
+ 
+    $query = $mysqli->query("UPDATE gigs SET downloadsDone = downloadsDone - 1 WHERE id=".$trackToApprove[0]['idGig']);
     $query = $mysqli->query("UPDATE gigs SET downloadsApproved = downloadsApproved + 1 WHERE id=".$trackToApprove[0]['idGig']);
 
     if($trackToApprove[0]['isExclusive'] === '0'){
