@@ -287,7 +287,7 @@ $( document ).ready(function() {
             totalTracksRequested += parseInt(tracks[i].downloadsRequested,10);
             totalTracksDownloaded += parseInt(tracks[i].downloadsApproved,10);
 
-            var entry = '<a href="confirmTrackBought.html?idGig='+ tracks[i].id +'" >'+
+            var entry = '<a href="confirm_track_bought.html?idGig='+ tracks[i].id +'" >'+
                         '<div class="inbox-item">'+
                             '<div class="inbox-item-img"><img src="'+tracks[i].cover+'"  class="img-circle" alt=""></div>'+
                             '<p class="inbox-item-author">'+tracks[i].title+' <br />'+ (tracks[i].isExclusive ? 'exclusive price' : 'standard price')+'</p>'+
