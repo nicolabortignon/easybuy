@@ -143,6 +143,18 @@
  
 <script>
 $( document ).ready(function() {
+
+var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+
+  if (!isChrome && !isSafari){
+    window.location.href = "rejected.html";
+  } else {
+    if (window.location.protocol != "https:")
+      window.location.href = "https:" + window.location.href.substring(window.location.protocol.length);
+  }
+
+
   $( "#registerForm" ).submit(function( event ) {
     event.preventDefault();
     var currency = $("form input[name='currencyRadio']:checked").val();
