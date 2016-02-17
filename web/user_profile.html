@@ -423,11 +423,23 @@
                             '</div>'+
                             '<p class="inbox-item-date">Updated Today</p>'+
                         '</div>'+
-                   '</a>'
-
+                   '</a>';
                     
                     output = output + entry;
+                    
                   }
+                     var reachedFull = 
+                        '<div class="inbox-item">'+
+                            '<div class="inbox-item-img"><img src="https://geo-media.beatport.com/image/13217428.jpg"  class="img-circle" alt=""></div>'+
+                            '<p class="inbox-item-author">Reloop (Original Mix)<span style="color:red"> Reached total downloads required for today</span></p>'+
+                            '<p class="inbox-item-date">Updated Today</p>'+
+                        '</div>' + 
+                        '<div class="inbox-item">'+
+                            '<div class="inbox-item-img"><img src="https://geo-media.beatport.com/image/13164980.jpg"  class="img-circle" alt=""></div>'+
+                            '<p class="inbox-item-author">Shadows Of Rigadon<span style="color:red"> Reached total downloads required for today</span></p>'+
+                            '<p class="inbox-item-date">Updated Today</p>'+
+                        '</div>';
+                  output = output + reachedFull;
 
                   $("#tracksRequested").html(output);
                   console.log(totalTracksRequested, totalTracksDownloaded)
