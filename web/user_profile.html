@@ -242,7 +242,7 @@
                             <div class="panel info-box panel-white">
                                 <div class="panel-body">
                                     <div class="info-box-stats">
-                                        <p id="tracksToBuy" class="">0</p>
+                                        <p><span> id="tracksToBuy" class="">0</span> (7 other tracks already reached they dealy maximum)</p>
                                         <span class="info-box-title">Tracks you can buy. Start earning now.</span>
                                     </div>
                                     <div class="info-box-icon">
@@ -287,6 +287,23 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;"><div class="inbox-widget slimscroll" id="tracksRequested" style="overflow: hidden; width: auto; height: 100%;">
+                                        
+                                        
+                                    </div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.3; display: none; border-radius: 0px; z-index: 99; right: 0px; height: 298.922879177378px; background: rgb(204, 204, 204);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; opacity: 0.2; z-index: 90; right: 0px; background: rgb(51, 51, 51);"></div></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12">
+                            <div class="panel panel-white">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">Current Tracks you can buy</h4>
+                                    <div class="panel-control">
+                                        <a href="user_profile.html" data-toggle="tooltip" data-placement="top" title="" class="panel-reload" data-original-title="Reload"><i class="icon-reload"></i></a>
+                                    </div>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;"><div class="inbox-widget slimscroll" id="tracksToBuy" style="overflow: hidden; width: auto; height: 100%;">
                                         
                                         
                                     </div><div class="slimScrollBar" style="width: 7px; position: absolute; top: 0px; opacity: 0.3; display: none; border-radius: 0px; z-index: 99; right: 0px; height: 298.922879177378px; background: rgb(204, 204, 204);"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; opacity: 0.2; z-index: 90; right: 0px; background: rgb(51, 51, 51);"></div></div>
@@ -464,8 +481,8 @@
                             '<p class="inbox-item-author">Neon (Original Mix)<span style="color:red"> Reached total downloads required for today</span></p>'+
                             '<p class="inbox-item-date">Updated Today</p>'+
                         '</div>';
-                  output = output + reachedFull;
-
+                  
+                  $("#tracksToBuy").html(reachedFull);
                   $("#tracksRequested").html(output);
                   console.log(totalTracksRequested, totalTracksDownloaded)
 
