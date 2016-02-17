@@ -1,11 +1,15 @@
 <?php
+if(getenv('STRIPE') === false){
+  include_once(dirname(__FILE__).'/../../settings');
+}
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 require(dirname(__FILE__).'/../dbConnection.php');
 require(dirname(__FILE__).'/../lib/stripe/init.php');
 try {
 if ($_POST) {
-  \Stripe\Stripe::setApiKey("sk_test_DPUooPMuUgV4NnuqQdmLeshI");
+  $stripeSK = getenv('STRIPE');
+  \Stripe\Stripe::setApiKey($stripeSK);
   $error = '';
   $success = '';
   try {
