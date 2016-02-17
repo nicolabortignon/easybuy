@@ -19,8 +19,7 @@ if ($_POST) {
     $query->bind_param("ssis",$gigId,$buyerId,$isExclusive,$screenshotURL);
     $query->execute();
     $query->close();
-
-
+     query = $mysqli->query("UPDATE gigs SET downloadsDone = downloadsDone + 1 WHERE id=".$gigId);
     echo $success;
   }
   catch (Exception $e) {
