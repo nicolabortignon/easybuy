@@ -28,7 +28,7 @@
         <link href="assets/plugins/weather-icons-master/css/weather-icons.min.css" rel="stylesheet" type="text/css"/> 
         <link href="assets/plugins/metrojs/MetroJs.min.css" rel="stylesheet" type="text/css"/>  
         <link href="assets/plugins/toastr/toastr.min.css" rel="stylesheet" type="text/css"/>  
-          
+             <link href="styles/main.css" rel="stylesheet" type="text/css" />
         <!-- Theme Styles -->
         <link href="assets/css/modern.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/themes/white.css" class="theme-color" rel="stylesheet" type="text/css"/>
@@ -125,19 +125,7 @@
                                         <li role="presentation"><a href="login.html"><i class="fa fa-sign-out m-r-xs"></i>Log out</a></li>
                                     </ul>
                                 </li>
-                                <!--
-                                <li>
-                                    <a href="login.html" class="log-out waves-effect waves-button waves-classic">
-                                        <span><i class="fa fa-sign-out m-r-xs"></i>Log out</span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="javascript:void(0);" class="waves-effect waves-button waves-classic" id="showRight">
-                                        <i class="fa fa-comments"></i>
-                                    </a>
-                                </li>
-                                     -->
+                                
                             </ul><!-- Nav -->
                         </div><!-- Top Menu -->
                     </div>
@@ -173,80 +161,58 @@
                     <div class="page-breadcrumb">
                         <ol class="breadcrumb">
                             <li><a href="user_profile.html">Dashboard</a></li>
-                            <li class="active">Frequent Asked Questions </li>
+                            <li><a href="tracks_to_buy.html">Buy Tracks</a></li>
+                            <li class="active">Confirm Your Purchease</li>
                         </ol>
                     </div>
                 </div>
                 <div id="main-wrapper">
                     <div class="row">
                         <div class="col-md-12">
-                       
-                            <h4>1. Why should i buy someone's else tracks.</h4>
-                            <h4>2. Is this legal?</h4>
-                            <h4>3. What if someone take a picture of my tracks and release publically? This is bad press!</h4>    
-                            <h4>4. Can I invite some of my friends?</h4>
-                            <h4>5. How do you calculate how to distribute the buys through the time period? </h4>
-                            <h4>6. What happen if you can not buy all the tracks that I have requested?</h4>
-                            <h4>7. What can I do with the money earned?</h4> 
-                            <h4>8. Why are you doing this?</h4>
-                            <h4>9. Is beatport going to ban my track for 'juicing' ?</h4>
-                            <h4>10. Where are the downlaods from?</h4>
-                            <hr/>         
+                        
 
-                            <h4>1. Why should i buy someone's else tracks.</h4><br />
-                            This service is the cheaper in the industry (by far) and is based on the idea that we can all help each other.<br />
-                            Someone can buy your tracks when you need and vice versa.<br />
-                            In order to keep this service going we need people that buy tracks. <br />
-                            If everyone buys tracks when asked to, the service keeps working.<br />
-                            And cherry on top, you also earn money!
-                            <br /><br />
+<div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Confirm your puchease (Read Carafully!)</h3>
+        </div>
+        <div class="panel-body">
+            <br />
+            <ul>
+                <li>Buy the track on beatport (Click the cover to go straight to the page).</li>
+                <li>Take a snapshot of your receipt (sent to you by beatport) <b> Your email account needs to be visible in the email </b> </li>
+                <li>If you don't receive the email, take a snapshot of your CART PAGE on beatport.<b>Your LOGIN NAME (top right corner) and the track bought needs to be clearly visible</b></li>
+                <li>Upload the snpashot by clicking the button 'Upload Screenshot'</li>
+                <li>Wait for our review.</li>
+                <li>Thank you, within 24h you'll receive <span id="money"> </span> in your account</li>
+            </ul>
+        </div>
+    </div>
+    <div id="upload">
+      <form  action="">
+          <div class="upload">
+              <input id="fileupload" type="file" name="files[]" data-url="php/upload/index.php" /><br /><br />
+          </div>
+      </form>
+    </div>
+     <h3> Track you bought </h3>
+    <div id="resultUpload">
+        <h3><br />Screenshot sucessfully uploaded. Wait for our review, and you'll receive the money within 24h <br /><br /> </h3>
+    </div>
+    <a id="coverLink" href="" target="_blank"><img id="cover" style="width: 100px" class="img-circle" src=""></img></a>
+    <h2><span id="gigTitle"></span>  <br />
+    <div class="card-holder">
+        <div class="card-deck-wrapper">
+            <div class="card-deck">
+                <div id="tracksRequested" >
+                  
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            <h4>2. Is this legal?</h4><br />
-                            It is. Beatport tried to shut down similar services before, unsucessfully.<br /> The truth is that there is no legal infringement.
-                            <br />
-                            In case beatport has a different opinion about the topic, our legal team will be happy to refresh them how open trade works.
-                            <br /> 
-                            Most important, all the informations about this system are kept encripted and not shared with 3rd parties. In short, you are safe!
-                            <br /><br />
 
-                            <h4>3. What if someone take a picture of my tracks and release publically? This is bad press!</h4>    <br />
-                            This is a great question. We have been thinking a lot about this as well.<br />
-                            First of all, we vet every single account request, and we let in only people we know first hand.
-                            <br /> Let's assume anyway that someone get pissed and decide to vent out on social media. Fine, is not the first case nor the last.
-                            <br /> We have a really smart (I can't tell you more) smart way to track that user. <br />
-                            Beside that, there is no much else we can do. My counter question is, if tomorrow a random person fabricates a screenshot of a similar service and start venting on the web against youm what defence would you have? Nothing. Exactly. Luckly enough the web forgets very easily.
-                            <br /><br />
-                            <h4>4. Can I invite some of my friends?</h4><br />
-                            You can ask them to register, but as said before we will bet every single request, so no offense if we don't allow them in.<br /><br />
-                            <h4>5. How do you calculate how to distribute the buys through the time period? </h4><br />
-                            I can write about this for 2 pages. Long story short, we craft an algorithm that receive as input the current chart positions on beatport,
-                            and tracks the minimum amount of tracks requested to join the chart.<br />
-                            We have also additional information coming from all the tracks currently in the system.<br />
-                            We match this about "natural buy trends". For instance, on tuesday there are less people on beatport, on saturday is the peak day, and so forth. 
-                            Mix all this information and you can trust us to distribute your buy in the best way possible, especially over a 2 weeks period.<br /><br />
-                            <h4>6. What happen if you can not buy all the tracks that I have requested?</h4><br />
-                            We try to accomodate every request, of course if you ask for 15000 downlaods we may have an hard time. <br />
-                            First and foremost we'll let you know straight away while you are trying to order the tracks.<br />
-                            Second, we'll refound every single penny we have not spent!<br /><br />
-                            <h4>7. What can I do with the money earned?</h4> <br />
-                            You can spend them to get your tracks bought, or , after reaching 50 euro, you can ask to be payed back. We'll send you over the money.<br /><br />
-                            <h4>8. Why are you doing this?</h4><br />
-                            We have been in this industry for about a decade now. <br />
-                            We have been the digital autobuy phenomena growing, and we didn't form a strong opinion about it. We just didn't use it originally.
-                            We kept investing in traditional form of promotions.<br />
-                            We litterally threw thousands of euro in Blog press, beatport banners, mailing list, and artists charts (yes you can buy slots in djs chart, crazy right? ). <br />
-                            All of this didn't really payed off. Too expansive and not enough impactiful. <br />
-                            We started autobuy, and we saw a really intresting pattern. Tracks that were actually good would stick in the chart for a while after we stopped the push. Tracks that were 'meh', for a lack of a better term, went out of the chart in couple of days.<br />
-                            <br /> We believe autobuy is a tool for promoting your tracks, to give that a better expose within all the commercial crap that beatport is throwing in unfair banner promotions.<br />
-                            If your tracks is worthy, autobuy is a good marketing strategy, if your track is ... 'meh' .. it will not last long. Sorry :)<br /><br />
-                            <h4>9. Is beatport going to ban my track for 'juicing' ?</h4><br />
-                            No, we have been tinkering the system and there is no way for beatport to track this.<br /><br />
-                            <h4>10. Where are the downlaods from?</h4><br />
-                            Expect to see a good percentage coming from europe, in a balanced distribution between UK, DE, IT, ES. <br />
-                            Another fair amount will comes from US. 
-                            The rest is miscillaneaus downloads from the rest of the world with few from MX.<br />
-                            We try to map the downlaods to a releastic distribution.<br /><br />
-                            <hr/>
+
+
                         </div>
                     </div><!-- Row -->
                 </div><!-- Main Wrapper -->
@@ -268,49 +234,8 @@
                         </span>
                         <p>Dashboard</p>
                     </a>
-                </li>
-                <!--
-                <li data-menu="profile">
-                    <a href="javsacript:void(0);">
-                        <span>
-                            <i class="glyphicon glyphicon-user"></i>
-                        </span>
-                        <p>Profile</p>
-                    </a>
-                </li>
-                <li data-menu="inbox">
-                    <a href="javsacript:void(0);">
-                        <span>
-                            <i class="glyphicon glyphicon-envelope"></i>
-                        </span>
-                        <p>Mailbox</p>
-                    </a>
-                </li>
-                <li data-menu="#">
-                    <a href="javsacript:void(0);">
-                        <span>
-                            <i class="glyphicon glyphicon-tasks"></i>
-                        </span>
-                        <p>Tasks</p>
-                    </a>
-                </li>
-                <li data-menu="#">
-                    <a href="javsacript:void(0);">
-                        <span>
-                            <i class="glyphicon glyphicon-cog"></i>
-                        </span>
-                        <p>Settings</p>
-                    </a>
-                </li>
-                <li data-menu="calendar">
-                    <a href="javsacript:void(0);">
-                        <span>
-                            <i class="glyphicon glyphicon-calendar"></i>
-                        </span>
-                        <p>Calendar</p>
-                    </a>
-                </li>
-              -->
+                </li> 
+ 
             </ul>
         </nav>
         <div class="cd-overlay"></div>
@@ -344,12 +269,74 @@
         <script src="assets/js/modern.js"></script>
         <script src="assets/js/pages/dashboard.js"></script>
         <link rel="stylesheet" href="styles/daterangepicker.css" />
+
+        <script src="js/vendor/jquery.ui.widget.js"></script>
         <script src="jslib/moment.min.js"></script>
         <script src="jslib/jquery.daterangepicker.js"></script>
+        <script src="js/vendor/jquery.ui.widget.js"></script>
+        <script src="js/jquery.iframe-transport.js"></script>
+        <script src="js/jquery.fileupload.js"></script>
 
     </body>
 </html>
 
  
+<script>
+
+$( document ).ready(function() {
+    var username;
+    var uid;
+    var isExclusive;
+    $('#resultUpload').hide();
+
+    function getQueryStringValue (key) {  
+      return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+    }  
+
+    var retriveUserInformation = function(){
+        $.getJSON( "php/api/userInfo.php", function( data ) {
+           username = data.username;
+           uid = data.uid;
+           $("#welcomeName").html(username);
+               getTrackInfo();
+        });
+    }
+
+    var getTrackInfo = function(){
+      $.getJSON( "php/api/getGigInfo.php?idGig="+getQueryStringValue('idGig'), function( data ) {
+        if(data.length > 0){
+          $("#gigTitle").html(data[0].title);
+          $("#coverLink").attr("href",data[0].beatportLink);
+          $("#cover").attr("src",data[0].cover);
+          isExclusive = data[0].isExclusive;
+          $("#money").html(data[0].isExclusive == 1 ? '3.00' : '2.5' );
+        }
+      });
+    }
  
+    $('#fileupload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+            $('#upload').hide();
+            $('#resultUpload').show();
+
+                console.log(data.result.files[0]);
+                var screenshotURL =  data.result.files[0];
+                var gigId = getQueryStringValue('idGig');
+                var buyerId = uid;
+              
+                $.post( "php/api/addPurcheasedTrack.php", { 
+                  screenshotURL: screenshotURL.url, 
+                  buyerId: buyerId, 
+                  gigId: gigId,
+                  isExclusive: isExclusive
+                });
+        }
+    });
+  
+
+    retriveUserInformation();
+
+});
+</script>
 </html>
