@@ -4166,7 +4166,7 @@ body:not(.page-horizontal-bar):not(.small-sidebar) .menu.accordion-menu a {
     position: absolute;
     right: 10px;
     bottom: 0;
-    font-size: 50px;
+    font-size: 40px;
     color: rgba(255,255,255,0.6);
 }
 .twitter-box i,
